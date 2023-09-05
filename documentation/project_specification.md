@@ -29,3 +29,13 @@ The program's GUI inputs will be the player's moves in case of playing human aga
 The time complexity of minimax with alphabeta pruning is $O(b^d)$ in the worst case (there was no pruning) with its best case being $O(b^{d/2})$, where b is the branching factor and d is the depth of the tree. In this case the branching factor is not known since the number of possible moves depends on the current state of the game and it could even be 0. The depth of the tree will allowed to be changed in the code to test how well the AI performs with different depths without sacrificing too much the performance.
 
 The space complexity of minimax with alphabeta pruning is $O(b \cdot d)$ since in the worst case that it had to explore all the nodes, it would need to store all of them $(b \cdot d)$.
+
+## Sources
+
+- <https://kartikkukreja.wordpress.com/2013/03/30/heuristic-function-for-reversiothello/>
+- <https://courses.cs.washington.edu/courses/cse573/04au/Project/mini1/RUSSIA/Final_Paper.pdf>
+- <https://ceur-ws.org/Vol-1107/paper2.pdf>
+- <https://github.com/kartikkukreja/blog-codes/blob/master/src/Heuristic%20Function%20for%20Reversi%20(Othello).cpp>
+- <https://ai-master.gitbooks.io/adversarial-search/content/property-of-alpha-beta-pruning-algorithm.html>
+- <https://users.cs.northwestern.edu/~agupta/_projects/ai_connect4/Connect4/Related/search.html>
+- <https://github.com/arminkz/Reversi>
