@@ -1,6 +1,6 @@
 # Project Specification
 
-This is the project specification for the course TKT20010 at the University of Helsinki in which I'm participating as a Master's student in Computer Science.
+This is the project specification for the course TKT20010 at the University of Helsinki in which I'm participating as a Master's student in Computer Science (in Spain it's the 4th year of bachelor in Computer Science but here it corresponds to first year of Masters).
 
 The language used in this project will be **English**, and the programming language will be **Python**.
 
