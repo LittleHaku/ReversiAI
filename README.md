@@ -10,6 +10,13 @@ Made for the course TKT20010 at the University of Helsinki.
 
 - [Project Specification](documentation/project_specification.md)
 
+## Manual
+
+- Clone the repository
+- Install the dependencies with `pip install -r requirements.txt`
+- [How to execute the game and play](documentation/how_to_play.md)
+- [How to run tests](documentation/how_to_run_tests.md)
+
 ## Weekly Reports
 
 - [Hours Worked](documentation/hours_worked.md)
