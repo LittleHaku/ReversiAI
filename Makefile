@@ -22,7 +22,23 @@ coverage:
 	$(COVERAGE_COMMAND) html --omit=$(COVERAGE_OMIT)
 
 # Clean up coverage data
-clean_coverage:
+clean_data_cov:
 	$(COVERAGE_COMMAND) erase
+	find . -name '.coverage' -exec rm -rf {} +
+
+# Remove all generated files
+clean_files_cov: clean_coverage
+	rm -rf htmlcov
+
+# Remove all __pycache__ directories
+clean_pycache:
+	find . -name '__pycache__' -exec rm -rf {} +
+
+# Clean .pytest_cache at all levels
+clean_pytest_cache:
+	find . -name '.pytest_cache' -exec rm -rf {} +
+
+# Clean all
+clean: clean_data_cov clean_files_cov clean_pycache clean_pytest_cache
 
 .PHONY: test_all coverage clean_coverage

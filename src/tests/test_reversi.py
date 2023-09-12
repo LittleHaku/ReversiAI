@@ -1,6 +1,9 @@
-# Make some unit testing for the reversi game
+"""
+Module to test out the ReversiGame class
+"""
 import unittest
-from reversi import ReversiGame
+from reversi.reversi import ReversiGame
+
 
 
 class TestReversiGame(unittest.TestCase):
@@ -27,7 +30,7 @@ class TestReversiGame(unittest.TestCase):
     def test_valid_moves(self):
         # Test the get_valid_moves method
         valid_moves = self.game.get_valid_moves()
-        
+
         # Since the game starts with the white player, the valid moves are:
         expected_valid_moves = [(2, 4), (3, 5), (4, 2), (5, 3)]
 
