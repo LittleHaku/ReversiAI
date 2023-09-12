@@ -1,5 +1,6 @@
 # ReversiAI
 
+[![CI](https://github.com/LittleHaku/ReversiAI/actions/workflows/main.yml/badge.svg)](https://github.com/LittleHaku/ReversiAI/actions/workflows/main.yml)
 [![codecov](https://codecov.io/gh/LittleHaku/ReversiAI/graph/badge.svg?token=5BP77HLZEI)](https://codecov.io/gh/LittleHaku/ReversiAI)
 
 ## Brief Description
