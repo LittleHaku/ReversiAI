@@ -1,4 +1,4 @@
-"""""
+""""
 Reversi Implementation using Tkinter for GUI
     Authors: Iván del Horno Sotillo
 """
