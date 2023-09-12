@@ -5,7 +5,6 @@ import unittest
 from reversi.reversi import ReversiGame
 
 
-
 class TestReversiGame(unittest.TestCase):
 
     def setUp(self):
