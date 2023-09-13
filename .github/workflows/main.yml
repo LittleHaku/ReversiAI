@@ -20,14 +20,10 @@ jobs:
         run: pip install poetry
       - name: Install dependencies
         run: poetry install
-      - name: Set up Xvfb
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y xvfb
-          export DISPLAY=:99
-          Xvfb $DISPLAY -screen 0 1024x768x24 > /dev/null 2>&1 &
-      - name: Run tests
-        run: poetry run coverage run --branch -m pytest
+      - name: Install XVFB
+        run: sudo apt-get install xvfb
+      - name: Run tests with XVFB
+        run: xvfb-run -a poetry run coverage run --branch -m pytest
       - name: Coverage report
         run: poetry run coverage xml
       - name: Coverage report to Codecov
