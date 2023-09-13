@@ -16,7 +16,7 @@ Made for the course TKT20010 at the University of Helsinki.
 ## Manual
 
 - Clone the repository
-- Install the dependencies with `pip install -r requirements.txt`
+- Install poetry with `curl -sSL https://install.python-poetry.org | python3 -` or `make install_poetry`
 - [How to execute the game and play](documentation/how_to_play.md)
 - [How to run tests](documentation/how_to_run_tests.md)
 

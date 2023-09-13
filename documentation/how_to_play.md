@@ -3,7 +3,7 @@
 ## How to run the game
 
 - Enter the directory `cd ReversiAI`
-- Run the game with `python3 src/reversi.py`
+- Run the game with `make play`
 
 ## Reversi Rules
 

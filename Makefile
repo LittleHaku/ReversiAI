@@ -7,20 +7,25 @@ POETRY = poetry
 
 # Define targets
 
+# Install poetry
+install_poetry:
+	curl -sSL https://install.python-poetry.org | python3 -
+
 # Play a game of Reversi
 play:
 	$(POETRY) run python3 -m src.reversi.reversi
 
 # Execute all tests
-test_all:
+test:
 	$(POETRY) run pytest -v
 
 # Generate code coverage report
 coverage:
-	rm -f .coverage
-	$(COVERAGE_COMMAND) run -m unittest $(TEST_MODULES)
-	$(COVERAGE_COMMAND) report -m --omit=$(COVERAGE_OMIT)
-	$(COVERAGE_COMMAND) html --omit=$(COVERAGE_OMIT)
+	poetry run coverage run -m pytest
+	poetry run coverage report -m
+
+flake8:
+	$(POETRY) run flake8
 
 # Clean up coverage data
 clean_data_cov:

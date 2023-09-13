@@ -2,7 +2,11 @@
 
 ## Unit tests
 
-TO BE DONE
+To execute the unit testings: `make test`
+
+## See coverage
+
+To see the coverage: `make coverage`
 
 ## Performance tests
 
@@ -11,4 +15,4 @@ TO BE DONE
 ## Checkstyle
 
 - Being at the root of the project
-- Run `flake8 src/`
+- Run `make flake8`
