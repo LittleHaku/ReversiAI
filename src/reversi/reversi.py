@@ -24,14 +24,10 @@ class ReversiGUI:
         self.draw_board()
         self.canvas.bind("<Button-1>", self.handle_click)
 
-        if self.game.current_player == "W":
-            self.current_player_label = tk.Label(
-                root, text="Current Player: White"
-            )
-        elif self.game.current_player == "B":
-            self.current_player_label = tk.Label(
-                root, text="Current Player: Black"
-            )
+        self.current_player_label = tk.Label(
+            root, text="Current Player: White"
+        )
+
         self.current_player_label.pack()
 
         self.root.protocol("WM_DELETE_WINDOW", self.confirm_quit)
