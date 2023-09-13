@@ -3,16 +3,17 @@ PYTHON = python3
 TEST_MODULES = tests.test_reversi
 COVERAGE_COMMAND = coverage
 COVERAGE_OMIT = "tests/*"
+POETRY = poetry
 
 # Define targets
 
 # Play a game of Reversi
 play:
-	$(PYTHON) -m reversi
+	$(POETRY) run python3 -m src.reversi.reversi
 
 # Execute all tests
 test_all:
-	$(PYTHON) -m unittest $(TEST_MODULES)
+	$(POETRY) run pytest -v
 
 # Generate code coverage report
 coverage:
