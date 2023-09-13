@@ -13,3 +13,16 @@ Create the git project | 0,5h | 05/09/2023
 Write the project specification | 1,5h | 05/09/2023
 Write the week 1 report | 0,5h | 05/09/2023
 **Total** | **9h** | **04/09/2023 - 05/09/2023**
+
+## Week 2
+
+objective | time | date
+--- | --- | ---
+Start coding the game with a GUI | 3h | 12/09/2023
+Make unit tests for the game | 2h | 12/09/2023
+Make poetry and codecov work | 2h | 12/09/2023
+Make the manual | 1h | 12/09/2023
+Finnish the unit tests for both the game and the GUI | 3h | 13/09/2023
+Make github actions work | 0.5h | 13/09/2023
+Write the week 2 report | 0.25h | 13/09/2023
+**Total** | **11.75h** | **12/09/2023 - 13/09/2023**
