@@ -67,18 +67,24 @@ class ReversiGUI:
         col = event.x // 50
         row = event.y // 50
         if (row, col) in self.game.get_valid_moves():
-            self.game.make_move(row, col)
-            self.draw_board()
-            if self.game.current_player == "W":
-                self.current_player_label.config(text="Current Player: White")
-            elif self.game.current_player == "B":
-                self.current_player_label.config(text="Current Player: Black")
+            self.handle_move(col, row)
 
-            if self.game.is_game_over():
-                winner = self.game.get_winner()
-                if winner == "Tie":
-                    result = "It's a tie!"
-                else:
-                    result = winner + " wins!"
-                self.current_player_label.config(text=result)
-                self.canvas.unbind("<Button-1>")  # Disable further clicks
+    def handle_move(self, col, row):
+        self.game.make_move(row, col)
+        self.draw_board()
+        if self.game.current_player == "W":
+            self.current_player_label.config(text="Current Player: White")
+        elif self.game.current_player == "B":
+            self.current_player_label.config(text="Current Player: Black")
+
+        if self.game.is_game_over():
+            self.handle_game_over()
+
+    def handle_game_over(self):
+        winner = self.game.get_winner()
+        if winner == "Tie":
+            result = "It's a tie!"
+        else:
+            result = winner + " wins!"
+        self.current_player_label.config(text=result)
+        self.canvas.unbind("<Button-1>")  # Dis
