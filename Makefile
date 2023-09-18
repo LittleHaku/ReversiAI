@@ -4,6 +4,7 @@ TEST_MODULES = tests.test_reversi
 COVERAGE_COMMAND = coverage
 COVERAGE_OMIT = "tests/*"
 POETRY = poetry
+APP_NAME = reversi
 
 # Define targets
 
@@ -25,7 +26,7 @@ test:
 
 # Generate code coverage report
 coverage:
-	$(POETRY) run pytest --cov 
+	$(POETRY) run pytest --cov=$(APP_NAME)
 # poetry run coverage report -m
 
 # Style check with flake8

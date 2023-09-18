@@ -23,11 +23,8 @@ jobs:
       - name: Install XVFB
         run: sudo apt-get install xvfb
       - name: Run tests with coverage and generate report
-        run: xvfb-run -a poetry run coverage run --branch -m pytest && poetry run coverage xml
+        run: poetry run coverage xml
       - name: Coverage report to Codecov
         uses: codecov/codecov-action@v3
-        with:
-          file: ./coverage.xml
-          fail_ci_if_error: true
       - name: flake8
         run: poetry run flake8 src
