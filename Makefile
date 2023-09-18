@@ -11,6 +11,10 @@ POETRY = poetry
 install_poetry:
 	curl -sSL https://install.python-poetry.org | python3 -
 
+# Install dependencies
+dependencies:
+	$(POETRY) install
+
 # Play a game of Reversi
 play:
 	$(POETRY) run python3 src/reversi/main.py
@@ -24,6 +28,7 @@ coverage:
 	poetry run coverage run -m pytest
 	poetry run coverage report -m
 
+# Style check with flake8
 flake8:
 	$(POETRY) run flake8
 
