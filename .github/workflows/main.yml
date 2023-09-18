@@ -27,6 +27,6 @@ jobs:
       - name: Coverage report
         run: poetry run coverage xml
       - name: Coverage report to Codecov
-        run: bash <(curl -s https://codecov.io/bash)
+        uses: codecov/codecov-action@v3
       - name: flake8
         run: poetry run flake8 src
