@@ -1,10 +1,8 @@
 """
 Module to test out the ReversiGame class
 """
-from tkinter import Tk, messagebox
 import unittest
 from reversi.reversi_logic import ReversiGame
-from unittest import mock
 
 
 class TestReversiGame(unittest.TestCase):
