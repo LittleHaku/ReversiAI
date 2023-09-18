@@ -26,3 +26,10 @@ Finnish the unit tests for both the game and the GUI | 3h | 13/09/2023
 Make github actions work | 0.5h | 13/09/2023
 Write the week 2 report | 0.25h | 13/09/2023
 **Total** | **11.75h** | **12/09/2023 - 13/09/2023**
+
+## Week 3
+
+objective | time | date
+--- | --- | ---
+Fix Codecov | 1h | 18/09/2023
+Making an AI that plays randomly | 2h | 18/09/2023

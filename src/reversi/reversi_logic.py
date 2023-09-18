@@ -1,3 +1,7 @@
+import random
+import time
+
+
 class ReversiGame:
     """Reversi Game Class"""
 
@@ -77,9 +81,20 @@ class ReversiGame:
         flip the corresponding pieces and update the current player (returns
         True), otherwise it will return False"""
 
+        print("Move: ", row, col)
         if self.is_valid_move(row, col):
+            print("Valid Move")
             self.board[row][col] = self.current_player
             self.flip_pieces(row, col)
+            # Print the move just done and who did it
+            print(
+                "Move: "
+                + str(row)
+                + " "
+                + str(col)
+                + " "
+                + self.current_player
+            )
             self.current_player = self.opponent()
             return True
         else:
@@ -155,3 +170,17 @@ class ReversiGame:
             return "W"
         else:
             return "Tie"
+
+    def minimax(self, depth):
+        """Test that will just return a random move from the valid moves"""
+
+        valid_moves = self.get_valid_moves()
+        return random.choice(valid_moves)
+
+    def ai_move(self):
+        """Makes a move using the minimax algorithm"""
+        row, col = self.minimax(1)
+        # Sleep for 1 second to make it look like the AI is thinking
+        print("AI Move: ", row, col)
+
+        self.make_move(row, col)

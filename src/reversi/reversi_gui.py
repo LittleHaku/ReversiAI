@@ -72,6 +72,8 @@ class ReversiGUI:
     def handle_move(self, col, row):
         self.game.make_move(row, col)
         self.draw_board()
+
+        # print("Valid Moves:", self.game.get_valid_moves())
         if self.game.current_player == "W":
             self.current_player_label.config(text="Current Player: White")
         elif self.game.current_player == "B":
@@ -79,6 +81,10 @@ class ReversiGUI:
 
         if self.game.is_game_over():
             self.handle_game_over()
+        elif self.game.current_player == "B":
+            print("AI Turn")
+            self.game.ai_move()
+            self.draw_board()
 
     def handle_game_over(self):
         winner = self.game.get_winner()
