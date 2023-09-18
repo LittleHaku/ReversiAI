@@ -13,7 +13,7 @@ install_poetry:
 
 # Play a game of Reversi
 play:
-	$(POETRY) run python3 -m src.reversi.reversi
+	$(POETRY) run python3 src/reversi/main.py
 
 # Execute all tests
 test:
