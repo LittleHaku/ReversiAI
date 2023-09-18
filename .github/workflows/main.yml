@@ -25,7 +25,7 @@ jobs:
       - name: Run tests with XVFB
         run: xvfb-run -a poetry run coverage run --branch -m pytest
       - name: Coverage report
-        run: poetry run coverage xml
+        run: poetry run pytest --cov
       - name: Coverage report to Codecov
         uses: codecov/codecov-action@v3
       - name: flake8
