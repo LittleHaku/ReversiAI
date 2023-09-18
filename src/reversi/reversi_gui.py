@@ -72,17 +72,9 @@ class ReversiGUI:
 
     def handle_move(self, col, row):
         self.game.make_move(row, col)
-        self.draw_board()
+        self.move_made()
 
-        # print("Valid Moves:", self.game.get_valid_moves())
-        if self.game.current_player == "W":
-            self.current_player_label.config(text="Current Player: White")
-        elif self.game.current_player == "B":
-            self.current_player_label.config(text="Current Player: Black")
-
-        if self.game.is_game_over():
-            self.handle_game_over()
-        elif self.game.current_player == "B":
+        if self.game.current_player == "B" and not self.game.is_game_over():
             self.handle_ai_move()
 
     def handle_ai_move(self):
@@ -91,6 +83,9 @@ class ReversiGUI:
         self.root.update_idletasks()
         time.sleep(0.5)
         self.game.ai_move()
+        self.move_made()
+
+    def move_made(self):
         self.draw_board()
 
         if self.game.current_player == "W":
