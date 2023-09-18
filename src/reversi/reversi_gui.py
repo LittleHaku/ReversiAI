@@ -1,3 +1,4 @@
+import time
 import tkinter as tk
 from tkinter import messagebox
 from reversi_logic import ReversiGame
@@ -82,9 +83,23 @@ class ReversiGUI:
         if self.game.is_game_over():
             self.handle_game_over()
         elif self.game.current_player == "B":
-            print("AI Turn")
-            self.game.ai_move()
-            self.draw_board()
+            self.handle_ai_move()
+
+    def handle_ai_move(self):
+        print("AI Turn")
+        # Force Tkinter to update the screen
+        self.root.update_idletasks()
+        time.sleep(0.5)
+        self.game.ai_move()
+        self.draw_board()
+
+        if self.game.current_player == "W":
+            self.current_player_label.config(text="Current Player: White")
+        elif self.game.current_player == "B":
+            self.current_player_label.config(text="Current Player: Black")
+
+        if self.game.is_game_over():
+            self.handle_game_over()
 
     def handle_game_over(self):
         winner = self.game.get_winner()
@@ -93,4 +108,4 @@ class ReversiGUI:
         else:
             result = winner + " wins!"
         self.current_player_label.config(text=result)
-        self.canvas.unbind("<Button-1>")  # Dis
+        self.canvas.unbind("<Button-1>")
