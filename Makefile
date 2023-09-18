@@ -25,8 +25,8 @@ test:
 
 # Generate code coverage report
 coverage:
-	poetry run coverage run -m pytest
-	poetry run coverage report -m
+	$(POETRY) run pytest --cov 
+# poetry run coverage report -m
 
 # Style check with flake8
 flake8:
