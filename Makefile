@@ -26,7 +26,7 @@ test:
 
 # Generate code coverage report
 coverage:
-	$(POETRY) run pytest --cov=$(APP_NAME)
+	$(POETRY) run pytest --cov=$(APP_NAME) --cov-report=term-missing
 # poetry run coverage report -m
 
 # Style check with flake8

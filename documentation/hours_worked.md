@@ -33,4 +33,5 @@ objective | time | date
 --- | --- | ---
 Fix Codecov | 1h | 18/09/2023
 Making an AI that plays randomly | 2h | 18/09/2023
-Implementing minimax with a trivial heuristic | 3h | 20/09/2023
+Implementing minimax with alphabeta with a trivial heuristic | 3h | 20/09/2023
+Fixing the minimax, undo, etc. | 2h | 20/09/2023

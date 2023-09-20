@@ -122,6 +122,32 @@ class TestReversiGame(unittest.TestCase):
         # Check the current player is the same
         self.assertEqual(new_game.current_player, 'B')
 
+    def test_alpha_beta_minimax_ai_win(self):
+        # Create a board where the AI (blacks) can win with one move
+        board = [
+            ['B', 'B', 'B', 'B', 'B', 'W', 'W', ' '],
+            ['B', 'B', 'B', 'B', 'B', 'B', 'B', 'B'],
+            ['B', 'B', 'B', 'B', 'B', 'B', 'B', 'B'],
+            ['B', 'B', 'B', 'B', 'B', 'B', 'B', 'B'],
+            ['B', 'B', 'B', 'B', 'B', 'B', 'B', 'B'],
+            ['B', 'B', 'B', 'B', 'B', 'B', 'B', 'B'],
+            ['B', 'B', 'B', 'B', 'B', 'B', 'B', 'B'],
+            ['B', 'B', 'B', 'B', 'B', 'B', 'B', 'B']
+        ]
+
+        current_player = 'B'
+
+        game = ReversiGame(board, current_player)
+
+        eval, move = game.alphabeta_minimax(
+            1, True, float("-inf"), float("inf"))
+
+        print(eval)
+        print(move)
+
+        self.assertGreaterEqual(eval, 50)
+        self.assertEqual(move, (0, 7))
+
 
 if __name__ == '__main__':
     unittest.main()

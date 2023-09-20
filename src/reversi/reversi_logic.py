@@ -205,7 +205,7 @@ class ReversiGame:
         # If the game is over or the depth is 0 then return the evaluation
         if self.is_game_over() or depth == 0:
             evaluation = self.evaluate_board()
-            print(f"Evaluated Board at depth {depth}: {evaluation}")
+            # print(f"Evaluated Board at depth {depth}: {evaluation}")
             return evaluation, None
 
         valid_moves = self.get_valid_moves()
@@ -219,15 +219,15 @@ class ReversiGame:
                 row, col = move
                 # Make the move
                 self.make_move(row, col)
-                print(f"Maximizing Player: Trying move {move}")
+                # print(f"Maximizing Player: Trying move {move}")
                 # Print the board after making the move
                 """ for row in self.board:
                     print(row) """
                 # Recursively call minimax for the next level
                 evaluation, _ = self.alphabeta_minimax(
                     depth - 1, False, alpha, beta)
-                print(
-                    f"Maximizing Player: Evaluated move {move} to {evaluation}")
+                """ print(
+                    f"Maximizing Player: Evaluated move {move} to {evaluation}") """
                 # Undo the move
                 self.undo_move()
 
@@ -237,11 +237,11 @@ class ReversiGame:
 
                 # Take the better between current eval and current alpha
                 alpha = max(alpha, evaluation)
-                print(f"Maximizing Player: Alpha = {alpha}, Beta = {beta}")
+                # print(f"Maximizing Player: Alpha = {alpha}, Beta = {beta}")
 
                 # If beta is less than or equal to alpha then prune
                 if beta <= alpha:
-                    print("Maximizing Player: Pruned")
+                    # print("Maximizing Player: Pruned")
                     break
 
             return max_eval, best_move
@@ -255,7 +255,7 @@ class ReversiGame:
                 row, col = move
                 # Make the move
                 self.make_move(row, col)
-                print(f"Minimizing Player: Trying move {move}")
+                # print(f"Minimizing Player: Trying move {move}")
                 # Recursively call minimax for the next level
                 evaluation, _ = self.alphabeta_minimax(
                     depth - 1, True, alpha, beta)
@@ -268,11 +268,11 @@ class ReversiGame:
 
                 # Take the better between current eval and current beta
                 beta = min(beta, evaluation)
-                print(f"Minimizing Player: Alpha = {alpha}, Beta = {beta}")
+                # print(f"Minimizing Player: Alpha = {alpha}, Beta = {beta}")
 
                 # If beta is less than or equal to alpha then prune
                 if beta <= alpha:
-                    print("Minimizing Player: Pruned")
+                    # print("Minimizing Player: Pruned")
                     break
 
             return min_eval, best_move
@@ -282,15 +282,15 @@ class ReversiGame:
         # I changed to my pieces taking the opponen because after making a move
         # the current player changes
         # Print the board before evaluating
-        print("Evaluating Board: ")
+        """ print("Evaluating Board: ")
         for row in self.board:
-            print(row)
+            print(row) """
 
         my_pieces = sum(row.count(self.opponent()) for row in self.board)
         opponent_pieces = sum(row.count(self.current_player)
                               for row in self.board)
-        print("AI Pieces: ", my_pieces)
-        print("Opponent Pieces: ", opponent_pieces)
+        # print("AI Pieces: ", my_pieces)
+        # print("Opponent Pieces: ", opponent_pieces)
         return my_pieces - opponent_pieces
 
     def undo_move(self):
@@ -335,10 +335,13 @@ class ReversiGame:
         game_copy = ReversiGame([row[:]
                                 for row in self.board], self.current_player,
                                 self.move_stack)
-
+        depth = 4
+        alpha = float("-inf")
+        beta = float("inf")
         _, move = game_copy.alphabeta_minimax(
-            1, True, float("-inf"), float("inf"))
+            depth, True, alpha, beta)
         print("AI Move: ", move)
+        print("-"*10)
         row, col = move
         # print("AI Move: ", row, col)
 
