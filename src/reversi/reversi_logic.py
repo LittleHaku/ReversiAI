@@ -12,6 +12,8 @@ class ReversiGame:
             [" " for _ in range(self.board_size)]
             for _ in range(self.board_size)
         ]
+        # Initialize an empty stack to store previous game states
+        self.move_stack = []
         # Initial pieces
         if board is None and current_player is None:
             self.board[3][3] = "W"
@@ -90,6 +92,8 @@ class ReversiGame:
             self.board[row][col] = self.current_player
             self.flip_pieces(row, col)
             self.current_player = self.opponent()
+            # After making a move, push the current game state onto the stack
+            self.move_stack.append((self.board, self.current_player))
             return True
         else:
             return False
@@ -165,15 +169,77 @@ class ReversiGame:
         else:
             return "Tie"
 
-    def minimax(self, depth):
-        """Test that will just return a random move from the valid moves"""
+    def minimax(self, depth, maximizing_player):
+        """ Minimax that will create a new game based on the current game and
+        simulate the outcomes of the move there, then return the evaluation
+        of the move and a tuple with the move """
+
+        # If the game is over or the depth is 0 then return the evaluation
+        if self.is_game_over() or depth == 0:
+            return self.evaluate_board(), None
 
         valid_moves = self.get_valid_moves()
-        return random.choice(valid_moves)
+
+        # If the player is maximizing then it will return the maximum value
+        if maximizing_player:
+            max_eval = float("-inf")
+            best_move = None
+
+            for move in valid_moves:
+                row, col = move
+                # Make the move
+                self.make_move(row, col)
+                # Recursively call minimax for the next level
+                evaluation, _ = self.minimax(depth - 1, False)
+                # Undo the move
+                self.undo_move()
+
+                if evaluation > max_eval:
+                    best_eval = evaluation
+                    best_move = move
+
+            return best_eval, best_move
+
+        else:
+            best_eval = float('inf')
+            best_move = None
+
+            for move in valid_moves:
+                row, col = move
+                # Make the move
+                self.make_move(row, col)
+                # Recursively call minimax for the next level
+                evaluation, _ = self.minimax(depth - 1, True)
+                # Undo the move
+                self.undo_move()
+
+                if evaluation < best_eval:
+                    best_eval = evaluation
+                    best_move = move
+
+            return best_eval, best_move
+
+    def evaluate_board(self):
+        """Simple evaluation function: difference in piece count"""
+        ai_pieces = sum(row.count(self.current_player) for row in self.board)
+        opponent_pieces = sum(row.count(self.opponent()) for row in self.board)
+        return ai_pieces - opponent_pieces
+
+    def undo_move(self):
+        """Undo the move by popping the previous game state from the stack"""
+        if self.move_stack:
+            self.board, self.current_player = self.move_stack.pop()
 
     def ai_move(self):
         """Makes a move using the minimax algorithm"""
-        row, col = self.minimax(1)
+
+        # Make a copy of the state of the game
+        game_copy = ReversiGame(self.board, self.current_player)
+
+        _, move = game_copy.minimax(1, True)
+        print("AI Move: ", move)
+        row = move[0]
+        col = move[1]
         # print("AI Move: ", row, col)
 
         self.make_move(row, col)
