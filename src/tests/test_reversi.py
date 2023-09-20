@@ -1,6 +1,7 @@
 """
 Module to test out the ReversiGame class
 """
+import copy
 import unittest
 from reversi.reversi_logic import ReversiGame
 
@@ -104,49 +105,105 @@ class TestReversiGame(unittest.TestCase):
 
     def test_create_game_from_started(self):
         # Test to create a new ReverseGame from a started game
-        # Create a board
-        board = [
-            [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
-            [' ', ' ', ' ', 'W', ' ', ' ', ' ', ' '],
-            [' ', ' ', ' ', 'W', 'W', ' ', ' ', ' '],
-            [' ', ' ', ' ', 'W', 'B', ' ', ' ', ' '],
-            [' ', ' ', ' ', 'B', 'W', ' ', ' ', ' '],
-            [' ', ' ', ' ', ' ', 'B', ' ', ' ', ' '],
-            [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
-            [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ']
-        ]
-        # Create a new game from the board
-        new_game = ReversiGame(board, 'B')
+        # Create a new game
+        new_game = ReversiGame()
+        # Make a move
+        new_game.make_move(2, 4)
+        # save board, player and stack
+        board = copy.deepcopy(new_game.board)
+        current_player = new_game.current_player
+        stack = copy.deepcopy(new_game.move_stack)
+
+        # Create a new game from the started game
+        new_game = ReversiGame(board, current_player, stack)
         # Check the board is the same
         self.assertEqual(new_game.board, board)
         # Check the current player is the same
         self.assertEqual(new_game.current_player, 'B')
+        # Check the stack is the same
+        self.assertEqual(new_game.move_stack, stack)
 
     def test_alpha_beta_minimax_ai_win(self):
         # Create a board where the AI (blacks) can win with one move
         board = [
-            ['B', 'B', 'B', 'B', 'B', 'W', 'W', ' '],
+            ['B', 'W', 'B', 'B', 'B', 'B', 'W', ' '],
             ['B', 'B', 'B', 'B', 'B', 'B', 'B', 'B'],
             ['B', 'B', 'B', 'B', 'B', 'B', 'B', 'B'],
             ['B', 'B', 'B', 'B', 'B', 'B', 'B', 'B'],
             ['B', 'B', 'B', 'B', 'B', 'B', 'B', 'B'],
             ['B', 'B', 'B', 'B', 'B', 'B', 'B', 'B'],
-            ['B', 'B', 'B', 'B', 'B', 'B', 'B', 'B'],
-            ['B', 'B', 'B', 'B', 'B', 'B', 'B', 'B']
+            ['B', 'B', 'B', 'B', 'W', 'B', 'B', 'B'],
+            ['B', 'B', 'B', 'B', ' ', 'B', 'B', 'B']
         ]
-
         current_player = 'B'
 
         game = ReversiGame(board, current_player)
 
+        depth = 3
+        alpha = float("-inf")
+        beta = float("inf")
         eval, move = game.alphabeta_minimax(
-            1, True, float("-inf"), float("inf"))
+            depth, True, alpha, beta)
 
         print(eval)
         print(move)
 
         self.assertGreaterEqual(eval, 50)
         self.assertEqual(move, (0, 7))
+
+    def test_alpha_beta_minimax_ai_loses(self):
+        # Create a board where the AI (blacks) will lose
+        board = [
+            ['W', 'W', 'W', 'W', 'W', 'W', 'W', 'W'],
+            ['W', 'W', 'W', 'W', 'W', 'W', 'W', 'W'],
+            ['W', 'W', 'W', 'W', 'W', 'W', 'W', 'W'],
+            ['B', 'B', 'W', 'W', 'W', 'W', 'W', 'W'],
+            ['W', 'W', 'W', 'W', 'W', 'W', 'W', 'W'],
+            ['W', 'W', 'W', 'W', 'W', 'W', 'W', 'W'],
+            [' ', ' ', 'W', 'W', 'W', 'W', 'W', 'W'],
+            [' ', ' ', 'W', 'W', 'W', 'W', 'W', 'W']
+        ]
+        current_player = 'B'
+        game = ReversiGame(board, current_player)
+
+        depth = 3
+        alpha = float("-inf")
+        beta = float("inf")
+        eval, move = game.alphabeta_minimax(
+            depth, True, alpha, beta)
+
+        print(eval)
+        print(move)
+        self.assertLessEqual(eval, -50)
+
+    def test_ai_move(self):
+        # Create a board where the AI (blacks) can win with one move
+        board = [
+            ['B', 'W', 'B', 'B', 'B', 'B', 'W', ' '],
+            ['B', 'B', 'B', 'B', 'B', 'B', 'B', 'B'],
+            ['B', 'B', 'B', 'B', 'B', 'B', 'B', 'B'],
+            ['B', 'B', 'B', 'B', 'B', 'B', 'B', 'B'],
+            ['B', 'B', 'B', 'B', 'B', 'B', 'B', 'B'],
+            ['B', 'B', 'B', 'B', 'B', 'B', 'B', 'B'],
+            ['B', 'B', 'B', 'B', 'W', 'B', 'B', 'B'],
+            ['B', 'B', 'B', 'B', ' ', 'B', 'B', 'B']
+        ]
+        expected_board = [
+            ['B', 'W', 'B', 'B', 'B', 'B', 'B', 'B'],
+            ['B', 'B', 'B', 'B', 'B', 'B', 'B', 'B'],
+            ['B', 'B', 'B', 'B', 'B', 'B', 'B', 'B'],
+            ['B', 'B', 'B', 'B', 'B', 'B', 'B', 'B'],
+            ['B', 'B', 'B', 'B', 'B', 'B', 'B', 'B'],
+            ['B', 'B', 'B', 'B', 'B', 'B', 'B', 'B'],
+            ['B', 'B', 'B', 'B', 'W', 'B', 'B', 'B'],
+            ['B', 'B', 'B', 'B', ' ', 'B', 'B', 'B']
+        ]
+        current_player = 'B'
+
+        game = ReversiGame(board, current_player)
+        game.ai_move()
+
+        self.assertEqual(game.board, expected_board)
 
 
 if __name__ == '__main__':

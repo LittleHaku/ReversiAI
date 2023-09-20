@@ -3,6 +3,9 @@ File containing the logic implementation of the game
 """
 
 
+import copy
+
+
 class ReversiGame:
     """Reversi Game Class"""
 
@@ -16,7 +19,7 @@ class ReversiGame:
         ]
 
         # Initial pieces
-        if board is None and current_player is None and move_stack is None:
+        if board is None:
             self.board[3][3] = "W"
             self.board[3][4] = "B"
             self.board[4][3] = "B"
@@ -32,14 +35,18 @@ class ReversiGame:
                 ['B', 'B', 'B', 'B', 'W', 'B', 'B', 'B'],
                 ['B', 'B', 'B', 'B', ' ', 'B', 'B', 'B']
             ] """
-            self.current_player = "W"
-            # Start the stack with the initial game state
-            self.move_stack = [
-                ([row[:] for row in self.board], self.current_player)
-            ]
         else:
             self.board = board
+
+        if current_player is None:
+            self.current_player = "W"
+        else:
             self.current_player = current_player
+
+        if move_stack is None:
+            self.move_stack = [
+                ([row[:] for row in self.board], self.current_player)]
+        else:
             self.move_stack = move_stack
 
     def is_valid_move(self, row, col):
@@ -309,7 +316,7 @@ class ReversiGame:
         # Get the last element of the stack
         # But important GET A COPY!!!
         last_state = self.move_stack[-1]
-        self.board = [row[:] for row in last_state[0]]
+        self.board = copy.deepcopy(last_state[0])
         self.current_player = last_state[1]
 
         # Print the board after undoing the move
