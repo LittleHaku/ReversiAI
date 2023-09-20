@@ -234,7 +234,8 @@ class ReversiGame:
                 evaluation, _ = self.alphabeta_minimax(
                     depth - 1, False, alpha, beta)
                 """ print(
-                    f"Maximizing Player: Evaluated move {move} to {evaluation}") """
+                    f"Maximizing Player:
+                    Evaluated move {move} to {evaluation}") """
                 # Undo the move
                 self.undo_move()
 
