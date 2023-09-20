@@ -102,6 +102,26 @@ class TestReversiGame(unittest.TestCase):
         ]
         self.assertTrue(self.game.is_game_over())
 
-    
+    def test_create_game_from_started(self):
+        # Test to create a new ReverseGame from a started game
+        # Create a board
+        board = [
+            [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
+            [' ', ' ', ' ', 'W', ' ', ' ', ' ', ' '],
+            [' ', ' ', ' ', 'W', 'W', ' ', ' ', ' '],
+            [' ', ' ', ' ', 'W', 'B', ' ', ' ', ' '],
+            [' ', ' ', ' ', 'B', 'W', ' ', ' ', ' '],
+            [' ', ' ', ' ', ' ', 'B', ' ', ' ', ' '],
+            [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
+            [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ']
+        ]
+        # Create a new game from the board
+        new_game = ReversiGame(board, 'B')
+        # Check the board is the same
+        self.assertEqual(new_game.board, board)
+        # Check the current player is the same
+        self.assertEqual(new_game.current_player, 'B')
+
+
 if __name__ == '__main__':
     unittest.main()
