@@ -86,7 +86,7 @@ class ReversiGame:
         flip the corresponding pieces and update the current player (returns
         True), otherwise it will return False"""
 
-        # print("Move: ", row, col)
+        print("Move: ", row, col)
         if self.is_valid_move(row, col):
             # print("Valid Move")
             self.board[row][col] = self.current_player
@@ -234,12 +234,13 @@ class ReversiGame:
         """Makes a move using the minimax algorithm"""
 
         # Make a copy of the state of the game
-        game_copy = ReversiGame(self.board, self.current_player)
+        # Make a copy of the board because if not it places two pieces
+        game_copy = ReversiGame([row[:]
+                                for row in self.board], self.current_player)
 
         _, move = game_copy.minimax(1, True)
         print("AI Move: ", move)
-        row = move[0]
-        col = move[1]
+        row, col = move
         # print("AI Move: ", row, col)
 
         self.make_move(row, col)
