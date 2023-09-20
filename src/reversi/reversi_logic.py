@@ -1,4 +1,6 @@
-import random
+"""
+File containing the logic implementation of the game
+"""
 
 
 class ReversiGame:
