@@ -4,7 +4,7 @@ import random
 class ReversiGame:
     """Reversi Game Class"""
 
-    def __init__(self):
+    def __init__(self, board=None, current_player=None):
         """Constructor, initializes the game with a board of 8x8 and the
         initial pieces in the center, also sets the current player to white"""
         self.board_size = 8
@@ -13,11 +13,15 @@ class ReversiGame:
             for _ in range(self.board_size)
         ]
         # Initial pieces
-        self.board[3][3] = "W"
-        self.board[3][4] = "B"
-        self.board[4][3] = "B"
-        self.board[4][4] = "W"
-        self.current_player = "W"
+        if board is None and current_player is None:
+            self.board[3][3] = "W"
+            self.board[3][4] = "B"
+            self.board[4][3] = "B"
+            self.board[4][4] = "W"
+            self.current_player = "W"
+        else:
+            self.board = board
+            self.current_player = current_player
 
     def is_valid_move(self, row, col):
         """Checks if the move to a certain cell is valid or not, it will check
