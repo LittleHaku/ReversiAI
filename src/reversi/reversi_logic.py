@@ -171,10 +171,10 @@ class ReversiGame:
         else:
             return "Tie"
 
-    def minimax(self, depth, maximizing_player):
+    def alphabeta_minimax(self, depth, maximizing_player, alpha, beta):
         """ Minimax that will create a new game based on the current game and
         simulate the outcomes of the move there, then return the evaluation
-        of the move and a tuple with the move """
+        of the move and a tuple with the move, now with alpha-beta pruning!"""
 
         # If the game is over or the depth is 0 then return the evaluation
         if self.is_game_over() or depth == 0:
@@ -192,7 +192,8 @@ class ReversiGame:
                 # Make the move
                 self.make_move(row, col)
                 # Recursively call minimax for the next level
-                evaluation, _ = self.minimax(depth - 1, False)
+                evaluation, _ = self.alphabeta_minimax(
+                    depth - 1, False, alpha, beta)
                 # Undo the move
                 self.undo_move()
 
@@ -200,8 +201,16 @@ class ReversiGame:
                     best_eval = evaluation
                     best_move = move
 
+                # Take the better between current eval and current alpha
+                alpha = max(alpha, evaluation)
+
+                # If beta is less than or equal to alpha then prune
+                if beta <= alpha:
+                    break
+
             return best_eval, best_move
 
+        # If the player is minimizing then it will return the minimum value
         else:
             best_eval = float('inf')
             best_move = None
@@ -211,13 +220,21 @@ class ReversiGame:
                 # Make the move
                 self.make_move(row, col)
                 # Recursively call minimax for the next level
-                evaluation, _ = self.minimax(depth - 1, True)
+                evaluation, _ = self.alphabeta_minimax(
+                    depth - 1, True, alpha, beta)
                 # Undo the move
                 self.undo_move()
 
                 if evaluation < best_eval:
                     best_eval = evaluation
                     best_move = move
+
+                # Take the better between current eval and current beta
+                beta = min(beta, evaluation)
+
+                # If beta is less than or equal to alpha then prune
+                if beta <= alpha:
+                    break
 
             return best_eval, best_move
 
@@ -240,7 +257,8 @@ class ReversiGame:
         game_copy = ReversiGame([row[:]
                                 for row in self.board], self.current_player)
 
-        _, move = game_copy.minimax(1, True)
+        _, move = game_copy.alphabeta_minimax(
+            3, True, float("-inf"), float("inf"))
         print("AI Move: ", move)
         row, col = move
         # print("AI Move: ", row, col)
