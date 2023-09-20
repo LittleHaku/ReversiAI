@@ -25,3 +25,4 @@ Made for the course TKT20010 at the University of Helsinki.
 - [Hours Worked](documentation/hours_worked.md)
 - [Week 1](documentation/weekly_reports/week1.md)
 - [Week 2](documentation/weekly_reports/week2.md)
+- [Week 3](documentation/weekly_reports/week3.md)
