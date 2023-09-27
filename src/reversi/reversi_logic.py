@@ -287,19 +287,54 @@ class ReversiGame:
 
     def evaluate_board(self):
         """Simple evaluation function: difference in piece count"""
-        # I changed to my pieces taking the opponen because after making a move
-        # the current player changes
-        # Print the board before evaluating
-        """ print("Evaluating Board: ")
-        for row in self.board:
-            print(row) """
 
+        coin_diff = self.coin_diff()
+        coin_placement = self.coin_placement()
+
+        coin_diff_weight = 0
+        coin_placement_weight = 100
+
+        coin_diff *= coin_diff_weight
+        coin_placement *= coin_placement_weight
+
+        heuristic = coin_diff + coin_placement
+
+        return heuristic
+
+    def coin_diff(self):
+        """Returns the difference in pieces between the current player and the
+        opponent"""
+        # Use opponent() for the current player because they have already been
+        # swapped
         my_pieces = sum(row.count(self.opponent()) for row in self.board)
         opponent_pieces = sum(row.count(self.current_player)
                               for row in self.board)
-        # print("AI Pieces: ", my_pieces)
-        # print("Opponent Pieces: ", opponent_pieces)
         return my_pieces - opponent_pieces
+
+    def coin_placement(self):
+        """Checks if the coins are in a good position or not, the corners are
+        the best positions, thus, we penalize the coins that could give them
+        away, also the edges are good places and the center not that good
+        """
+
+        board = [[100, -20, 10, 5, 5, 10, -20, 100],
+                 [-20, -50, -2, -2, -2, -2, -50, -20],
+                 [10, -2, -1, -1, -1, -1, -2, 10],
+                 [5, -2, -1, -1, -1, -1, -2, 5],
+                 [5, -2, -1, -1, -1, -1, -2, 5],
+                 [10, -2, -1, -1, -1, -1, -2, 10],
+                 [-20, -50, -2, -2, -2, -2, -50, -20],
+                 [100, -20, 10, 5, 5, 10, -20, 100]]
+
+        # Use opponent for the curr player because have already been swaped
+        current = self.opponent()
+        sum = 0
+        for row in range(self.board_size):
+            for col in range(self.board_size):
+                if self.board[row][col] == current:
+                    sum += board[row][col]
+
+        return sum
 
     def undo_move(self):
         """Undo the move by popping the previous game state from the stack"""
@@ -343,7 +378,7 @@ class ReversiGame:
         game_copy = ReversiGame([row[:]
                                 for row in self.board], self.current_player,
                                 self.move_stack)
-        depth = 4
+        depth = 1
         alpha = float("-inf")
         beta = float("inf")
         _, move = game_copy.alphabeta_minimax(
