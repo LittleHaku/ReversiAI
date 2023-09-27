@@ -229,7 +229,128 @@ class TestReversiGame(unittest.TestCase):
         # when normalized it will be 1
         self.assertEqual(game.eval_coin_placement(), 1)
 
-    
+    def test_eval_coin_placement_divide_zero(self):
+        # Create a board where the evaluation will be divided by zero
+        board = [
+            [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
+            [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
+            [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
+            [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
+            [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
+            [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
+            [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
+            [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ']
+        ]
+
+        current_player = 'W'
+
+        game = ReversiGame(board, current_player)
+
+        # Both player have the same placement so the evaluation will be 0
+        self.assertEqual(game.eval_coin_placement(), 0)
+
+    def test_eval_corners_divide_zero(self):
+        # Board the sum of corners will be divided by zero
+        board = [
+            [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
+            [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
+            [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
+            [' ', ' ', ' ', 'W', 'B', ' ', ' ', ' '],
+            [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
+            [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
+            [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
+            [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ']
+        ]
+
+        current_player = 'W'
+
+        game = ReversiGame(board, current_player)
+
+        # Both player have the same number of corners so the evaluation
+        # will be 0
+        self.assertEqual(game.eval_corner(), 0)
+
+    def test_eval_frontier_divide_zero(self):
+        # Board where the sum of frontiers must be divided b zero
+        # apart from the empty board i dont think any other board meets this
+        board = [
+            [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
+            [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
+            [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
+            [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
+            [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
+            [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
+            [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
+            [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ']
+        ]
+
+        current_player = 'W'
+
+        game = ReversiGame(board, current_player)
+
+        # Both player have the same number of frontiers so the evaluation
+        # will be 0
+        self.assertEqual(game.eval_frontier(), 0)
+
+    def test_eval_coin_diff_divide_zero(self):
+        # Board where the sum of coins must be zero
+        # Once again i dont think any other board meets this
+        board = [
+            [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
+            [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
+            [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
+            [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
+            [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
+            [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
+            [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
+            [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ']
+        ]
+        current_player = 'W'
+
+        game = ReversiGame(board, current_player)
+
+        self.assertEqual(game.eval_coin_diff(), 0)
+
+    def test_eval_mobility_divide_zero(self):
+        # board where none has mobility
+        # this would mean the game is over but just in case
+        # i added the condition
+        board = [
+            ['B', 'B', 'B', 'B', 'B', 'B', 'B', 'B'],
+            ['B', 'W', 'W', 'W', 'W', 'W', 'W', 'B'],
+            ['B', 'W', 'W', 'W', 'W', 'W', 'W', 'B'],
+            ['B', 'W', 'W', 'W', 'W', 'W', 'W', 'B'],
+            ['B', 'W', 'W', 'W', 'W', 'W', 'W', 'B'],
+            ['B', 'W', 'W', 'W', 'W', 'W', 'W', 'B'],
+            ['B', 'W', 'W', 'W', 'W', 'W', 'W', 'B'],
+            ['B', 'B', 'B', 'B', 'B', 'B', 'B', 'B']
+        ]
+
+        current_player = 'W'
+        game = ReversiGame(board, current_player)
+
+        self.assertEqual(game.eval_mobility(), 0)
+
+    def test_eval_stability_divide_zero(self):
+        # board where none has stability
+        # i cant think of any other board other than the empty one
+
+        board = [
+            [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
+            [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
+            [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
+            [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
+            [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
+            [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
+            [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
+            [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ']
+        ]
+
+        current_player = 'W'
+        game = ReversiGame(board, current_player)
+
+        self.assertEqual(game.eval_stability(), 0)
+
 
 if __name__ == '__main__':
     unittest.main()

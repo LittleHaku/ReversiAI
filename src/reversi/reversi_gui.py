@@ -1,4 +1,3 @@
-import time
 import tkinter as tk
 from tkinter import messagebox
 from reversi_logic import ReversiGame
@@ -107,7 +106,7 @@ class ReversiGUI:
                     black_count += 1
                 elif self.game.board[row][col] == "W":
                     white_count += 1
-        
+
         if winner == "Tie":
             result = "It's a tie!"
         else:
