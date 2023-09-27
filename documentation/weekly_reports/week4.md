@@ -20,4 +20,5 @@ The program now has an AI that is able to play properly and it is actyally hard 
 ## Next week
 
 - Make the heuristics differentiate early and late game.
-- I may try to implement a menu, but the main focus it's on the AI.I
+- I may try to implement a menu, but the main focus it's on the AI.
+- Find another way to execute the minimax without making game copies
