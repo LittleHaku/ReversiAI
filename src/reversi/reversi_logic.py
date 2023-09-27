@@ -290,20 +290,23 @@ class ReversiGame:
 
         # Weights for the evaluation function
         coin_diff = 1
-        coin_placement = 5
+        coin_placement = 1
         mobility = 1
         frontier = 1
+        stability = 1
 
         coin_diff *= self.eval_coin_diff()
         coin_placement *= self.eval_coin_placement()
         mobility *= self.eval_mobility()
         frontier *= self.eval_frontier()
+        stability *= self.eval_stability()
         print("-"*10)
 
         print("Coin Diff: ", coin_diff)
         print("Coin Placement: ", coin_placement)
         print("Mobility: ", mobility)
         print("Frontier: ", frontier)
+        print("Stability: ", stability)
 
         heuristic = coin_diff + coin_placement + mobility + frontier
 
@@ -449,6 +452,9 @@ class ReversiGame:
         opponent_moves = len(self.get_valid_moves())
         self.current_player = self.opponent()
 
+        print("Current Moves: ", current_moves)
+        print("Opponent Moves: ", opponent_moves)
+
         difference = current_moves - opponent_moves
 
         # Normalize
@@ -458,6 +464,87 @@ class ReversiGame:
             difference = 0
 
         return difference
+
+    def eval_stability(self):
+        """Checks the number of pieces that can't be flipped, the more the
+        better"""
+
+        # Use opponent for the curr player because have already been swaped
+        current = self.opponent()
+        opponent = self.current_player
+        current_stability = self.get_stability(current)
+        opponent_stability = self.get_stability(opponent)
+
+        difference = current_stability - opponent_stability
+
+        # Normalize
+        if current_stability + opponent_stability != 0:
+            difference = difference / (current_stability + opponent_stability)
+        else:
+            difference = 0
+
+        return difference
+
+    def get_stability(self, player):
+        """Checks the number of pieces that can't be flipped for the given
+        player"""
+
+        # Add all the stable cells to a set to avoid duplicates
+        stable_cells = set()
+
+        # Go throught the board
+        for row in range(self.board_size):
+            for col in range(self.board_size):
+                if self.board[row][col] == player:
+                    # Check if it's stable
+                    if self.is_stable(row, col):
+                        # Add it to the set
+                        stable_cells.add((row, col))
+
+        return len(stable_cells)
+
+    def is_stable(self, row, col):
+        """Similar to is_flippable but it will check if the cell is stable"""
+
+        # Array of directions to check
+        directions = [
+            (0, 1),
+            (1, 0),
+            (0, -1),
+            (-1, 0),
+            (1, 1),
+            (-1, -1),
+            (1, -1),
+            (-1, 1),
+        ]
+
+        # Get the player in the cell
+        player = self.board[row][col]
+        if player == "B":
+            opponent = "W"
+        else:
+            opponent = "B"
+
+        # Check if it can be flipped in any direction
+        for dr, dc in directions:
+            # Checks if there is an opponent piece in the direction
+            r, c = row + dr, col + dc
+            if (
+                0 <= r < self.board_size
+                and 0 <= c < self.board_size
+                and self.board[r][c] == opponent
+            ):
+                """If there is an opponent piece then it will continue in that
+                direction until it finds a piece of the current player or an
+                empty cell"""
+                r, c = r + dr, c + dc
+                while 0 <= r < self.board_size and 0 <= c < self.board_size:
+                    if self.board[r][c] == player:
+                        return True
+                    elif self.board[r][c] == " ":
+                        break
+                    r, c = r + dr, c + dc
+        return True
 
     def undo_move(self):
         """Undo the move by popping the previous game state from the stack"""
