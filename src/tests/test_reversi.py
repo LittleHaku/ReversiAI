@@ -205,6 +205,14 @@ class TestReversiGame(unittest.TestCase):
 
         self.assertEqual(game.board, expected_board)
 
+    def test_pruning(self):
+        # Create a normal game, make a move and let them play
+        game = ReversiGame()
+        # Make a move at (5, 2)
+        game.make_move(5, 2)
+        # Let AI execute
+        game.ai_move()
+
     def test_eval_coin_placement(self):
         # Create a board with known evaluation
         board = [

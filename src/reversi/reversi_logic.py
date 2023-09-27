@@ -249,7 +249,7 @@ class ReversiGame:
 
                 # If beta is less than or equal to alpha then prune
                 if beta <= alpha:
-                    # print("Maximizing Player: Pruned")
+                    print("Maximizing Player: Pruned")
                     break
 
             return max_eval, best_move
@@ -280,7 +280,7 @@ class ReversiGame:
 
                 # If beta is less than or equal to alpha then prune
                 if beta <= alpha:
-                    # print("Minimizing Player: Pruned")
+                    print("Minimizing Player: Pruned")
                     break
 
             return min_eval, best_move
@@ -302,14 +302,14 @@ class ReversiGame:
         frontier *= self.eval_frontier()
         stability *= self.eval_stability()
         corners *= self.eval_corner()
-        print("-"*10)
+        """ print("-"*10)
 
         print("Coin Diff: ", coin_diff)
         print("Coin Placement: ", coin_placement)
         print("Mobility: ", mobility)
         print("Frontier: ", frontier)
         print("Stability: ", stability)
-        print("Corners: ", corners)
+        print("Corners: ", corners) """
 
         heuristic = coin_diff + coin_placement + mobility + frontier + \
             stability + corners
@@ -466,8 +466,8 @@ class ReversiGame:
             difference = 0
 
         # Print board
-        for row in self.board:
-            print(row)
+        """ for row in self.board:
+            print(row) """
 
         return difference
 
@@ -481,9 +481,6 @@ class ReversiGame:
         self.current_player = current
         opponent_moves = len(self.get_valid_moves())
         self.current_player = self.opponent()
-
-        print("Current Moves: ", current_moves)
-        print("Opponent Moves: ", opponent_moves)
 
         difference = current_moves - opponent_moves
 
