@@ -81,7 +81,7 @@ class ReversiGUI:
         print("AI Turn")
         # Force Tkinter to update the screen
         self.root.update_idletasks()
-        time.sleep(0.5)
+        # time.sleep(0.5)
         self.game.ai_move()
         self.move_made()
 
