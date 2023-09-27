@@ -289,15 +289,19 @@ class ReversiGame:
         """Simple evaluation function: difference in piece count"""
 
         # Weights for the evaluation function
-        coin_diff = 50
-        coin_placement = 50
-        mobility = 50
-        frontier = 50
+        coin_diff = 1
+        coin_placement = 1
+        mobility = 1
+        frontier = 1
 
         coin_diff *= self.eval_coin_diff()
         coin_placement *= self.eval_coin_placement()
         mobility *= self.eval_mobility()
         frontier *= self.eval_frontier()
+        print("Coin Diff: ", coin_diff)
+        print("Coin Placement: ", coin_placement)
+        print("Mobility: ", mobility)
+        print("Frontier: ", frontier)
 
         heuristic = coin_diff + coin_placement + mobility + frontier
 
@@ -330,8 +334,16 @@ class ReversiGame:
                     # Add them to the set
                     opponent_frontier.update(frontiers)
 
-        # Return the difference between the frontiers
-        return len(current_frontier) - len(opponent_frontier)
+        difference = len(current_frontier) - len(opponent_frontier)
+
+        # Normalize the difference to be between -1 and 1
+        if len(current_frontier) + len(opponent_frontier) != 0:
+            difference = difference / (len(current_frontier) +
+                                       len(opponent_frontier))
+        else:
+            difference = 0
+
+        return difference
 
     def get_frontier(self, row, col):
         """From the given cell checks in all directions for empty cells,
@@ -371,7 +383,16 @@ class ReversiGame:
         my_pieces = sum(row.count(self.opponent()) for row in self.board)
         opponent_pieces = sum(row.count(self.current_player)
                               for row in self.board)
-        return my_pieces - opponent_pieces
+
+        difference = my_pieces - opponent_pieces
+
+        # Normalize the difference to be between -1 and 1
+        if my_pieces + opponent_pieces != 0:
+            difference = difference / (my_pieces + opponent_pieces)
+        else:
+            difference = 0
+
+        return difference
 
     def eval_coin_placement(self):
         """Checks if the coins are in a good position or not, the corners are
@@ -390,13 +411,30 @@ class ReversiGame:
 
         # Use opponent for the curr player because have already been swaped
         current = self.opponent()
-        sum = 0
+        curr_sum = 0
         for row in range(self.board_size):
             for col in range(self.board_size):
                 if self.board[row][col] == current:
-                    sum += board[row][col]
+                    curr_sum += board[row][col]
 
-        return sum
+        # Use opponent for the curr player because have already been swaped
+        opponent = self.current_player
+        opp_sum = 0
+        for row in range(self.board_size):
+            for col in range(self.board_size):
+                if self.board[row][col] == opponent:
+                    opp_sum += board[row][col]
+
+        difference = curr_sum - opp_sum
+
+        # Normalize although its not between -1 and 1 exactly
+        max_difference = curr_sum + opp_sum
+        if max_difference != 0:
+            difference = difference / max_difference
+        else:
+            difference = 0
+
+        return difference
 
     def eval_mobility(self):
         """Checks the number of moves for each player to limit the opponent's
@@ -409,7 +447,15 @@ class ReversiGame:
         opponent_moves = len(self.get_valid_moves())
         self.current_player = self.opponent()
 
-        return current_moves - opponent_moves
+        difference = current_moves - opponent_moves
+
+        # Normalize
+        if current_moves + opponent_moves != 0:
+            difference = difference / (current_moves + opponent_moves)
+        else:
+            difference = 0
+
+        return difference
 
     def undo_move(self):
         """Undo the move by popping the previous game state from the stack"""
