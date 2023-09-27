@@ -290,10 +290,10 @@ class ReversiGame:
 
         # Weights for the evaluation function
         coin_diff = 1
-        coin_placement = 1
+        coin_placement = 50
         mobility = 1
-        frontier = 1
-        stability = 1
+        frontier = 10
+        stability = 25
 
         coin_diff *= self.eval_coin_diff()
         coin_placement *= self.eval_coin_placement()
