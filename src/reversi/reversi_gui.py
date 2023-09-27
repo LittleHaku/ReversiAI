@@ -98,9 +98,20 @@ class ReversiGUI:
 
     def handle_game_over(self):
         winner = self.game.get_winner()
+        # Count the number of black and white pieces
+        black_count = 0
+        white_count = 0
+        for row in range(self.game.board_size):
+            for col in range(self.game.board_size):
+                if self.game.board[row][col] == "B":
+                    black_count += 1
+                elif self.game.board[row][col] == "W":
+                    white_count += 1
+        
         if winner == "Tie":
             result = "It's a tie!"
         else:
             result = winner + " wins!"
+        result += f" (B:{black_count} - W:{white_count})"
         self.current_player_label.config(text=result)
         self.canvas.unbind("<Button-1>")
