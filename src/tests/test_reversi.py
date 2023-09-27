@@ -205,6 +205,31 @@ class TestReversiGame(unittest.TestCase):
 
         self.assertEqual(game.board, expected_board)
 
+    def test_eval_coin_placement(self):
+        # Create a board with known evaluation
+        board = [
+            ['B', 'B', 'B', 'B', 'B', 'B', 'B', 'B'],
+            ['W', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
+            ['W', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
+            ['W', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
+            [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
+            [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
+            [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
+            [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ']
+        ]
+
+        current_player = 'W'
+
+        game = ReversiGame(board, current_player)
+
+        # We know the sum of the game will be
+        # 100 -20 +10 +5 +5 +10 -20 +100 = 190 black
+        # -20 + 10 +5 = -5 white
+        # the difference will be 195
+        # when normalized it will be 1
+        self.assertEqual(game.eval_coin_placement(), 1)
+
+    
 
 if __name__ == '__main__':
     unittest.main()
