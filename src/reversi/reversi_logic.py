@@ -288,20 +288,82 @@ class ReversiGame:
     def evaluate_board(self):
         """Simple evaluation function: difference in piece count"""
 
-        coin_diff = self.coin_diff()
-        coin_placement = self.coin_placement()
+        # Weights for the evaluation function
+        coin_diff = 50
+        coin_placement = 50
+        mobility = 50
+        frontier = 50
 
-        coin_diff_weight = 0
-        coin_placement_weight = 100
+        coin_diff *= self.eval_coin_diff()
+        coin_placement *= self.eval_coin_placement()
+        mobility *= self.eval_mobility()
+        frontier *= self.eval_frontier()
 
-        coin_diff *= coin_diff_weight
-        coin_placement *= coin_placement_weight
-
-        heuristic = coin_diff + coin_placement
+        heuristic = coin_diff + coin_placement + mobility + frontier
 
         return heuristic
 
-    def coin_diff(self):
+    def eval_frontier(self):
+        """Checks the frontier of the current board, the frontier is the
+        empty cells next to a piece, in this case we want to maximize the
+        frontier for our player and minimize it for the opponent"""
+
+        # Use opponent for the curr player because have already been swaped
+        current = self.opponent()
+        opponent = self.current_player
+        # Add all the frontier cells to a set to avoid duplicates
+        current_frontier = set()
+        opponent_frontier = set()
+
+        # Go throught the board
+        for row in range(self.board_size):
+            for col in range(self.board_size):
+                if self.board[row][col] == current:
+                    # Get the frontier cells around it
+                    frontiers = self.get_frontier(row, col)
+                    # Add them to the set
+                    current_frontier.update(frontiers)
+
+                elif self.board[row][col] == opponent:
+                    # Get the frontier cells around it
+                    frontiers = self.get_frontier(row, col)
+                    # Add them to the set
+                    opponent_frontier.update(frontiers)
+
+        # Return the difference between the frontiers
+        return len(current_frontier) - len(opponent_frontier)
+
+    def get_frontier(self, row, col):
+        """From the given cell checks in all directions for empty cells,
+        if found, they will be returned as frontiers"""
+
+        # Array of directions to check
+        directions = [
+            (0, 1),
+            (1, 0),
+            (0, -1),
+            (-1, 0),
+            (1, 1),
+            (-1, -1),
+            (1, -1),
+            (-1, 1),
+        ]
+        # Check if the cell is flippable in any direction
+        frontiers = []
+        for dir_row, dir_col in directions:
+            # Checks if there is an empty cell in the direction
+            r, c = row + dir_row, col + dir_col
+            if (
+                0 <= r < self.board_size
+                and 0 <= c < self.board_size
+                and self.board[r][c] == " "
+            ):
+                # If there is an empty cell then it will add it to the list
+                frontiers.append((r, c))
+
+        return frontiers
+
+    def eval_coin_diff(self):
         """Returns the difference in pieces between the current player and the
         opponent"""
         # Use opponent() for the current player because they have already been
@@ -311,7 +373,7 @@ class ReversiGame:
                               for row in self.board)
         return my_pieces - opponent_pieces
 
-    def coin_placement(self):
+    def eval_coin_placement(self):
         """Checks if the coins are in a good position or not, the corners are
         the best positions, thus, we penalize the coins that could give them
         away, also the edges are good places and the center not that good
@@ -335,6 +397,19 @@ class ReversiGame:
                     sum += board[row][col]
 
         return sum
+
+    def eval_mobility(self):
+        """Checks the number of moves for each player to limit the opponent's
+        moves and increase the player's moves"""
+
+        # Use opponent for the curr player because have already been swaped
+        current = self.opponent()
+        current_moves = len(self.get_valid_moves())
+        self.current_player = current
+        opponent_moves = len(self.get_valid_moves())
+        self.current_player = self.opponent()
+
+        return current_moves - opponent_moves
 
     def undo_move(self):
         """Undo the move by popping the previous game state from the stack"""
@@ -378,7 +453,7 @@ class ReversiGame:
         game_copy = ReversiGame([row[:]
                                 for row in self.board], self.current_player,
                                 self.move_stack)
-        depth = 1
+        depth = 3
         alpha = float("-inf")
         beta = float("inf")
         _, move = game_copy.alphabeta_minimax(
