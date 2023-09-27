@@ -290,7 +290,7 @@ class ReversiGame:
 
         # Weights for the evaluation function
         coin_diff = 1
-        coin_placement = 1
+        coin_placement = 5
         mobility = 1
         frontier = 1
 
@@ -298,6 +298,8 @@ class ReversiGame:
         coin_placement *= self.eval_coin_placement()
         mobility *= self.eval_mobility()
         frontier *= self.eval_frontier()
+        print("-"*10)
+
         print("Coin Diff: ", coin_diff)
         print("Coin Placement: ", coin_placement)
         print("Mobility: ", mobility)
@@ -411,28 +413,28 @@ class ReversiGame:
 
         # Use opponent for the curr player because have already been swaped
         current = self.opponent()
+        opponent = self.current_player
         curr_sum = 0
+        opp_sum = 0
         for row in range(self.board_size):
             for col in range(self.board_size):
                 if self.board[row][col] == current:
                     curr_sum += board[row][col]
-
-        # Use opponent for the curr player because have already been swaped
-        opponent = self.current_player
-        opp_sum = 0
-        for row in range(self.board_size):
-            for col in range(self.board_size):
-                if self.board[row][col] == opponent:
+                elif self.board[row][col] == opponent:
                     opp_sum += board[row][col]
 
         difference = curr_sum - opp_sum
 
-        # Normalize although its not between -1 and 1 exactly
-        max_difference = curr_sum + opp_sum
-        if max_difference != 0:
-            difference = difference / max_difference
+        max_sum = abs(opp_sum) + abs(curr_sum)
+
+        if max_sum != 0:
+            difference = difference / max_sum
         else:
             difference = 0
+
+        # Print board
+        for row in self.board:
+            print(row)
 
         return difference
 
