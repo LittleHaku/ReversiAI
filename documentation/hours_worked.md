@@ -38,3 +38,13 @@ Fixing the minimax, undo, etc. | 3h | 20/09/2023
 Making tests | 1.5h | 20/09/2023
 Writing the week 3 report | 0.25h | 20/09/2023
 **Total** | **10.75h** | **18/09/2023 - 20/09/2023**
+
+## Week 4
+
+objective | time | date
+--- | --- | ---
+Implementing heuristics | 5h | 27/09/2023
+Fixing the heuristics and normalizing | 1h | 27/09/2023
+Creating tests | 1h | 27/09/2023
+Writing the week 4 report | 0.25h | 27/09/2023
+**Total** | **7.25h** | **27/09/2023**
