@@ -294,12 +294,14 @@ class ReversiGame:
         mobility = 1
         frontier = 10
         stability = 25
+        corners = 50
 
         coin_diff *= self.eval_coin_diff()
         coin_placement *= self.eval_coin_placement()
         mobility *= self.eval_mobility()
         frontier *= self.eval_frontier()
         stability *= self.eval_stability()
+        corners *= self.eval_corner()
         print("-"*10)
 
         print("Coin Diff: ", coin_diff)
@@ -307,10 +309,38 @@ class ReversiGame:
         print("Mobility: ", mobility)
         print("Frontier: ", frontier)
         print("Stability: ", stability)
+        print("Corners: ", corners)
 
-        heuristic = coin_diff + coin_placement + mobility + frontier
+        heuristic = coin_diff + coin_placement + mobility + frontier + \
+            stability + corners
 
         return heuristic
+
+    def eval_corner(self):
+        """Checks if we have a corner since they are overpowered"""
+
+        # Use opponent for the curr player because have already been swaped
+        current = self.opponent()
+        opponent = self.current_player
+
+        # Check if the corners are taken
+        corners = [(0, 0), (0, 7), (7, 0), (7, 7)]
+        current_corners = 0
+        opponent_corners = 0
+        for corner in corners:
+            if self.board[corner[0]][corner[1]] == current:
+                current_corners += 1
+            elif self.board[corner[0]][corner[1]] == opponent:
+                opponent_corners += 1
+
+        difference = current_corners - opponent_corners
+        # Normalize
+        if current_corners + opponent_corners != 0:
+            difference = difference / (current_corners + opponent_corners)
+        else:
+            difference = 0
+
+        return difference
 
     def eval_frontier(self):
         """Checks the frontier of the current board, the frontier is the
