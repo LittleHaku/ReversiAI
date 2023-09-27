@@ -43,8 +43,9 @@ Writing the week 3 report | 0.25h | 20/09/2023
 
 objective | time | date
 --- | --- | ---
+Reading, researching and taking notes about different heuristics | 4h | 24/09/2023-26/09/2023
 Implementing heuristics | 5h | 27/09/2023
 Fixing the heuristics and normalizing | 1h | 27/09/2023
 Creating tests | 1h | 27/09/2023
 Writing the week 4 report | 0.25h | 27/09/2023
-**Total** | **7.25h** | **27/09/2023**
+**Total** | **11.25h** | **24/09/2023 - 27/09/2023**
