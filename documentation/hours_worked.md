@@ -57,3 +57,4 @@ objective | time | date
 Implementing different weights for the heuristics depending on the stage of the game | 1.5h | 03/10/2023
 Instead of game copies using a stack | 1h | 03/10/2023
 Understanding my classmate's code and writing the review | 2h | 03/10/2023
+Creating a restart button and a custom popup message window | 2h | 03/10/2023
