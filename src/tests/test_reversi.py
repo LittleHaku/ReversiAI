@@ -359,6 +359,36 @@ class TestReversiGame(unittest.TestCase):
 
         self.assertEqual(game.eval_stability(), 0)
 
+    def test_mid_game(self):
+        # Test it makes correct moves in a mid game scenario
+        # Board with 20 < coins < 40
+        board = [
+            ['B', 'W', 'B', 'B', 'B', 'B', 'W', ' '],
+            ['B', 'B', 'B', 'B', 'B', 'B', 'B', 'B'],
+            ['B', 'B', 'B', 'B', 'B', 'B', 'B', 'B'],
+            ['B', 'B', 'B', 'B', 'B', 'B', 'B', 'B'],
+            [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
+            [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
+            [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
+            [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ']
+        ]
+        expected_board = [
+            ['B', 'W', 'B', 'B', 'B', 'B', 'B', 'B'],
+            ['B', 'B', 'B', 'B', 'B', 'B', 'B', 'B'],
+            ['B', 'B', 'B', 'B', 'B', 'B', 'B', 'B'],
+            ['B', 'B', 'B', 'B', 'B', 'B', 'B', 'B'],
+            [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
+            [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
+            [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
+            [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ']
+        ]
+
+        current_player = 'B'
+
+        game = ReversiGame(board, current_player)
+        game.ai_move()
+        self.assertEqual(game.board, expected_board)
+
 
 if __name__ == '__main__':
     unittest.main()
