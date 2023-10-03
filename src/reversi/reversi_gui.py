@@ -15,8 +15,10 @@ class ReversiGUI:
         self.root = root
         self.root.title("Reversi Game")
         self.game = ReversiGame()
+
         self.canvas = tk.Canvas(root, width=400, height=400, bg=BLACK)
         self.canvas.pack()
+
         self.draw_board()
         self.canvas.bind("<Button-1>", self.handle_click)
 
@@ -26,7 +28,18 @@ class ReversiGUI:
 
         self.current_player_label.pack()
 
+        self.restart_button = tk.Button(
+            root, text="Restart Game", command=self.restart_game
+        )
+        self.restart_button.pack()
+
         self.root.protocol("WM_DELETE_WINDOW", self.confirm_quit)
+
+    def restart_game(self):
+        """Reset the game state and redraw the board"""
+        self.game = ReversiGame()
+        self.draw_board()
+        self.current_player_label.config(text="Current Player: White")
 
     def confirm_quit(self):
         """Display a confirmation dialog when leaving the game"""
