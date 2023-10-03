@@ -233,8 +233,9 @@ class ReversiGame:
                 # Recursively call minimax for the next level
                 evaluation, _ = self.alphabeta_minimax(
                     depth - 1, False, alpha, beta)
-                print(
-                    f"Maximizing Player: IEvaluated move {move} to {evaluation}")
+                """ print(
+                    f"Maximizing Player: IEvaluated move 
+                    {move} to {evaluation}") """
                 # Undo the move
                 self.undo_move()
 
@@ -267,8 +268,9 @@ class ReversiGame:
                 evaluation, _ = self.alphabeta_minimax(
                     depth - 1, True, alpha, beta)
 
-                print(
-                    f"Minimizing Player: Evaluated move {move} to {evaluation}")
+                """ print(
+                    f"Minimizing Player: Evaluated move
+                    {move} to {evaluation}") """
                 # Undo the move
                 self.undo_move()
 
