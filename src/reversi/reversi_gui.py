@@ -1,3 +1,4 @@
+import time
 import tkinter as tk
 from reversi_logic import ReversiGame
 
@@ -8,25 +9,15 @@ WHITE = "#edfff5"
 
 
 class ReversiGUI:
-    """Class to implement the GUI for the Reversi Game"""
-
     def __init__(self, root):
         self.root = root
-        self.root.title("Reversi Game")
-        # Set the background color of the root window
+        self.root.title("Reversi")
         self.root.configure(bg=BLACK)
-        self.game = None
+
         self.canvas = tk.Canvas(root, width=400, height=400, bg=BLACK)
         self.canvas.pack()
-        self.setup_game()
-
-    def setup_game(self):
-
-        self.game = ReversiGame()
-        root = self.root
-        self.draw_board()
-        self.canvas.bind("<Button-1>", self.handle_click)
-
+        self.playercolor = " "
+        self.iacolor = " "
         self.current_player_label = tk.Label(
             root, text="Current Player: White", bg=BLACK, fg=WHITE
         )
@@ -40,6 +31,47 @@ class ReversiGUI:
         self.restart_button.pack()
 
         self.root.protocol("WM_DELETE_WINDOW", self.confirm_quit)
+        self.choose_color_menu()
+
+    def choose_color_menu(self):
+        self.color_frame = tk.Frame(self.root, bg=BLACK)
+        self.color_frame.pack()
+
+        label = tk.Label(self.color_frame, text="Select a Player:",
+                         font=("Arial", 16), bg=BLACK, fg=WHITE)
+        label.pack()
+
+        black_button = tk.Button(
+            self.color_frame, text="Black", command=self.setup_black_game,
+            bg=BLACK, fg=WHITE, activebackground=LAVANDA, borderwidth=0
+        )
+        white_button = tk.Button(
+            self.color_frame, text="White", command=self.setup_white_game,
+            bg=BLACK, fg=WHITE, activebackground=LAVANDA, borderwidth=0
+        )
+
+        black_button.pack()
+        white_button.pack()
+
+    def setup_black_game(self):
+        self.iacolor = "W"
+        self.playercolor = "B"
+        self.color_frame.pack_forget()
+        self.setup_game()
+
+    def setup_white_game(self):
+        self.iacolor = "B"
+        self.playercolor = "W"
+        self.color_frame.pack_forget()
+        self.setup_game()
+
+    def setup_game(self):
+        self.game = ReversiGame()
+        self.draw_board()
+        self.canvas.bind("<Button-1>", self.handle_click)
+        # If the computer is playing first, make a move
+        if self.iacolor == "W":
+            self.handle_ai_move()
 
     def custom_message_box(self, title, message):
         # Create a new top-level window
@@ -152,7 +184,8 @@ class ReversiGUI:
         self.game.make_move(row, col)
         self.move_made()
 
-        if self.game.current_player == "B" and not self.game.is_game_over():
+        if (self.game.current_player == self.iacolor
+                and not self.game.is_game_over()):
             self.handle_ai_move()
 
     def handle_ai_move(self):
