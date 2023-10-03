@@ -46,6 +46,9 @@ class ReversiGUI:
         # Set the window title
         custom_box.title(title)
 
+        # Set the window's background color
+        custom_box.configure(bg=BLACK)
+
         # Create a label with the message
         label = tk.Label(custom_box, text=message, fg=WHITE, bg=BLACK)
         label.pack(padx=20, pady=20)
@@ -60,9 +63,11 @@ class ReversiGUI:
             custom_box.destroy()
 
         yes_button = tk.Button(custom_box, text="Yes",
-                               bg=BLACK, fg=WHITE, command=yes_action)
+                               bg=BLACK, fg=WHITE, command=yes_action,
+                               borderwidth=0, activebackground=LAVANDA)
         no_button = tk.Button(custom_box, text="No",
-                              bg=BLACK, fg=WHITE, command=no_action)
+                              bg=BLACK, fg=WHITE, command=no_action,
+                              borderwidth=0, activebackground=LAVANDA)
 
         # Pack the buttons
         yes_button.pack(side=tk.LEFT, padx=10)
