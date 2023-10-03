@@ -15,11 +15,15 @@ class ReversiGUI:
         self.root.title("Reversi Game")
         # Set the background color of the root window
         self.root.configure(bg=BLACK)
-        self.game = ReversiGame()
-
+        self.game = None
         self.canvas = tk.Canvas(root, width=400, height=400, bg=BLACK)
         self.canvas.pack()
+        self.setup_game()
 
+    def setup_game(self):
+
+        self.game = ReversiGame()
+        root = self.root
         self.draw_board()
         self.canvas.bind("<Button-1>", self.handle_click)
 
