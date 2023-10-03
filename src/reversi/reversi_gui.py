@@ -135,9 +135,12 @@ class ReversiGUI:
             "Are you sure you want to restart the game?"
         )
         if user_response == "yes":
-            self.game = ReversiGame()
-            self.draw_board()
-            self.current_player_label.config(text="Current Player: White")
+            # remove binds so player cant still play
+            self.canvas.unbind("<Button-1>")
+            self.choose_color_menu()
+            # self.game = ReversiGame()
+            # self.draw_board()
+            # self.current_player_label.config(text="Current Player: White")
 
     def confirm_quit(self):
         """Display a confirmation dialog when leaving the game"""
