@@ -39,22 +39,81 @@ class ReversiGUI:
 
         self.root.protocol("WM_DELETE_WINDOW", self.confirm_quit)
 
+    def custom_message_box(self, title, message):
+        """Create a custom message box with a black background and white text"""
+        root = tk.Tk()
+        root.withdraw()
+
+        # Create a custom Toplevel widget with a black background
+        top = tk.Toplevel(root, bg=BLACK)
+        top.title(title)
+
+        # Create a Label widget with the message text and white text color
+        message_label = tk.Label(
+            top, text=message, bg=BLACK, fg=WHITE, font=("TkDefaultFont", 12)
+        )
+        message_label.pack(padx=20, pady=20)
+
+        # Create a Frame widget to hold the buttons
+        button_frame = tk.Frame(top, bg=BLACK)
+        button_frame.pack(padx=20, pady=10)
+
+        # Create a custom Button widget with a black background and white text color
+        ok_button = tk.Button(
+            button_frame,
+            text="OK",
+            command=top.destroy,
+            bg=BLACK,
+            fg=WHITE,
+            font=("TkDefaultFont", 12),
+            borderwidth=0,
+            activebackground=LAVANDA,
+        )
+        ok_button.pack(side="left", padx=10)
+
+        # Create a custom Button widget with a black background and white text color
+        cancel_button = tk.Button(
+            button_frame,
+            text="Cancel",
+            command=top.destroy,
+            bg=BLACK,
+            fg=WHITE,
+            font=("TkDefaultFont", 12),
+            borderwidth=0,
+            activebackground=LAVANDA,
+        )
+        cancel_button.pack(side="left", padx=10)
+
+        # Center the Toplevel widget on the screen
+        top.update_idletasks()
+        width = top.winfo_width()
+        height = top.winfo_height()
+        x = (top.winfo_screenwidth() // 2) - (width // 2)
+        y = (top.winfo_screenheight() // 2) - (height // 2)
+        top.geometry("{}x{}+{}+{}".format(width, height, x, y))
+
+        # Make the Toplevel widget modal
+        top.grab_set()
+        top.wait_window()
+
+        return "yes"
+
     def restart_game(self):
-        """new game, thanks Tatu for the feedback"""
-        user_response = messagebox.askyesno(
+        """Reset the game state and redraw the board"""
+        user_response = self.custom_message_box(
             "Restart Confirmation", "Are you sure you want to restart the game?"
         )
-        if user_response:
+        if user_response == "yes":
             self.game = ReversiGame()
             self.draw_board()
             self.current_player_label.config(text="Current Player: White")
 
     def confirm_quit(self):
         """Display a confirmation dialog when leaving the game"""
-        user_response = messagebox.askyesno(
+        user_response = self.custom_message_box(
             "Quit Confirmation", "Are you sure you want to leave the game?"
         )
-        if user_response:
+        if user_response == "yes":
             self.root.quit()
 
     def draw_board(self):
