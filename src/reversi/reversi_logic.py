@@ -612,13 +612,13 @@ class ReversiGame:
 
         # Make a copy of the state of the game
         # Make a copy of the board because if not it places two pieces
-        game_copy = ReversiGame([row[:]
+        """ game_copy = ReversiGame([row[:]
                                 for row in self.board], self.current_player,
-                                self.move_stack)
-        depth = 3
+                                self.move_stack) """
+        depth = 5
         alpha = float("-inf")
         beta = float("inf")
-        _, move = game_copy.alphabeta_minimax(
+        _, move = self.alphabeta_minimax(
             depth, True, alpha, beta)
         print("AI Move: ", move)
         print("-"*10)
