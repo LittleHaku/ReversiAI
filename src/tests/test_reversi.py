@@ -389,6 +389,15 @@ class TestReversiGame(unittest.TestCase):
         game.ai_move()
         self.assertEqual(game.board, expected_board)
 
+    def test_first_random_ai_move(self):
+        game = ReversiGame()
+        game.first_ai_move()
+
+        possible_moves = [(2, 4), (3, 5), (4, 2), (5, 3)]
+        # Check only one of these cells has now a white piece
+        white_pieces = [game.board[i][j] == 'W' for i, j in possible_moves]
+        self.assertEqual(white_pieces.count(True), 1)
+
 
 if __name__ == '__main__':
     unittest.main()
