@@ -1,6 +1,4 @@
 import tkinter as tk
-from tkinter import messagebox
-from tkinter import ttk
 from reversi_logic import ReversiGame
 
 # Constants for the colors
@@ -97,7 +95,8 @@ class ReversiGUI:
     def restart_game(self):
         """Reset the game state and redraw the board"""
         user_response = self.custom_message_box(
-            "Restart Confirmation", "Are you sure you want to restart the game?"
+            "Restart Confirmation",
+            "Are you sure you want to restart the game?"
         )
         if user_response == "yes":
             self.game = ReversiGame()
