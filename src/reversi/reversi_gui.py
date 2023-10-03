@@ -40,63 +40,57 @@ class ReversiGUI:
         self.root.protocol("WM_DELETE_WINDOW", self.confirm_quit)
 
     def custom_message_box(self, title, message):
-        """Create a custom message box with a black background and white text"""
-        root = tk.Tk()
-        root.withdraw()
+        # Create a new top-level window
+        custom_box = tk.Toplevel()
 
-        # Create a custom Toplevel widget with a black background
-        top = tk.Toplevel(root, bg=BLACK)
-        top.title(title)
+        # Set the window title
+        custom_box.title(title)
 
-        # Create a Label widget with the message text and white text color
-        message_label = tk.Label(
-            top, text=message, bg=BLACK, fg=WHITE, font=("TkDefaultFont", 12)
-        )
-        message_label.pack(padx=20, pady=20)
+        # Create a label with the message
+        label = tk.Label(custom_box, text=message, fg=WHITE, bg=BLACK)
+        label.pack(padx=20, pady=20)
 
-        # Create a Frame widget to hold the buttons
-        button_frame = tk.Frame(top, bg=BLACK)
-        button_frame.pack(padx=20, pady=10)
+        # Create 'Yes' and 'No' buttons
+        def yes_action():
+            custom_box.user_response = "yes"
+            custom_box.destroy()
 
-        # Create a custom Button widget with a black background and white text color
-        ok_button = tk.Button(
-            button_frame,
-            text="OK",
-            command=top.destroy,
-            bg=BLACK,
-            fg=WHITE,
-            font=("TkDefaultFont", 12),
-            borderwidth=0,
-            activebackground=LAVANDA,
-        )
-        ok_button.pack(side="left", padx=10)
+        def no_action():
+            custom_box.user_response = "no"
+            custom_box.destroy()
 
-        # Create a custom Button widget with a black background and white text color
-        cancel_button = tk.Button(
-            button_frame,
-            text="Cancel",
-            command=top.destroy,
-            bg=BLACK,
-            fg=WHITE,
-            font=("TkDefaultFont", 12),
-            borderwidth=0,
-            activebackground=LAVANDA,
-        )
-        cancel_button.pack(side="left", padx=10)
+        yes_button = tk.Button(custom_box, text="Yes",
+                            bg="black", fg="white", command=yes_action)
+        no_button = tk.Button(custom_box, text="No",
+                            bg="black", fg="white", command=no_action)
 
-        # Center the Toplevel widget on the screen
-        top.update_idletasks()
-        width = top.winfo_width()
-        height = top.winfo_height()
-        x = (top.winfo_screenwidth() // 2) - (width // 2)
-        y = (top.winfo_screenheight() // 2) - (height // 2)
-        top.geometry("{}x{}+{}+{}".format(width, height, x, y))
+        # Pack the buttons
+        yes_button.pack(side=tk.LEFT, padx=10)
+        no_button.pack(side=tk.RIGHT, padx=10)
 
-        # Make the Toplevel widget modal
-        top.grab_set()
-        top.wait_window()
+        # Initialize user_response to None
+        custom_box.user_response = None
 
-        return "yes"
+        # Get the parent window's geometry
+        parent_x = self.root.winfo_rootx()
+        parent_y = self.root.winfo_rooty()
+        parent_width = self.root.winfo_width()
+        parent_height = self.root.winfo_height()
+
+        # Calculate the position of the new window
+        custom_box_x = parent_x + parent_width // 2
+        custom_box_y = parent_y + parent_height // 2
+
+        # Set the new window's geometry
+        custom_box.geometry(f"+{custom_box_x}+{custom_box_y}")
+
+        # Wait for the window to be closed
+        custom_box.wait_window(custom_box)
+
+        # Return the user's response
+        return custom_box.user_response
+
+
 
     def restart_game(self):
         """Reset the game state and redraw the board"""
