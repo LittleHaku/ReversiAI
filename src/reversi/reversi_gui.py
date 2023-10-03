@@ -1,4 +1,3 @@
-import time
 import tkinter as tk
 from reversi_logic import ReversiGame
 
