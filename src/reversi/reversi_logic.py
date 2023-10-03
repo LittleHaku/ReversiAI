@@ -233,9 +233,8 @@ class ReversiGame:
                 # Recursively call minimax for the next level
                 evaluation, _ = self.alphabeta_minimax(
                     depth - 1, False, alpha, beta)
-                """ print(
-                    f"Maximizing Player:
-                    Evaluated move {move} to {evaluation}") """
+                print(
+                    f"Maximizing Player: IEvaluated move {move} to {evaluation}")
                 # Undo the move
                 self.undo_move()
 
@@ -249,7 +248,7 @@ class ReversiGame:
 
                 # If beta is less than or equal to alpha then prune
                 if beta <= alpha:
-                    print("Maximizing Player: Pruned")
+                    # print("Maximizing Player: Pruned")
                     break
 
             return max_eval, best_move
@@ -267,6 +266,9 @@ class ReversiGame:
                 # Recursively call minimax for the next level
                 evaluation, _ = self.alphabeta_minimax(
                     depth - 1, True, alpha, beta)
+
+                print(
+                    f"Minimizing Player: Evaluated move {move} to {evaluation}")
                 # Undo the move
                 self.undo_move()
 
@@ -280,7 +282,7 @@ class ReversiGame:
 
                 # If beta is less than or equal to alpha then prune
                 if beta <= alpha:
-                    print("Minimizing Player: Pruned")
+                    # print("Minimizing Player: Pruned")
                     break
 
             return min_eval, best_move
@@ -289,12 +291,43 @@ class ReversiGame:
         """Simple evaluation function: difference in piece count"""
 
         # Weights for the evaluation function
-        coin_diff = 1
+        # The weights will be divided into early, mid and late game
+        n_pieces = sum(row.count("B") for row in self.board) + \
+            sum(row.count("W") for row in self.board)
+
+        if n_pieces < 20:
+            # Early game, we dont need to maximize the pieces but the strategy
+            # getting a lot of mobility to be able to make better moves
+            coin_diff = 10
+            coin_placement = 30
+            mobility = 50
+            frontier = 40
+            stability = 10
+            corners = 50
+        elif n_pieces < 40:
+            # Mid game, we need to get the corners and the best spots
+            coin_diff = 20
+            coin_placement = 70
+            mobility = 30
+            frontier = 20
+            stability = 40
+            corners = 70
+        else:
+            # At this point the game is almost over, we need a lot of pieces
+            # and not to get flipped
+            coin_diff = 100
+            coin_placement = 40
+            mobility = 20
+            frontier = 10
+            stability = 100
+            corners = 50
+
+        """ coin_diff = 1
         coin_placement = 50
         mobility = 1
         frontier = 10
         stability = 25
-        corners = 50
+        corners = 50 """
 
         coin_diff *= self.eval_coin_diff()
         coin_placement *= self.eval_coin_placement()
@@ -615,7 +648,7 @@ class ReversiGame:
         """ game_copy = ReversiGame([row[:]
                                 for row in self.board], self.current_player,
                                 self.move_stack) """
-        depth = 5
+        depth = 3
         alpha = float("-inf")
         beta = float("inf")
         _, move = self.alphabeta_minimax(
