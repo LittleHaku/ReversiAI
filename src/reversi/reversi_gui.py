@@ -1,5 +1,6 @@
 import tkinter as tk
 from tkinter import messagebox
+from tkinter import ttk
 from reversi_logic import ReversiGame
 
 # Constants for the colors
@@ -14,6 +15,8 @@ class ReversiGUI:
     def __init__(self, root):
         self.root = root
         self.root.title("Reversi Game")
+        # Set the background color of the root window
+        self.root.configure(bg=BLACK)
         self.game = ReversiGame()
 
         self.canvas = tk.Canvas(root, width=400, height=400, bg=BLACK)
@@ -23,13 +26,14 @@ class ReversiGUI:
         self.canvas.bind("<Button-1>", self.handle_click)
 
         self.current_player_label = tk.Label(
-            root, text="Current Player: White"
+            root, text="Current Player: White", bg=BLACK, fg=WHITE
         )
 
         self.current_player_label.pack()
 
         self.restart_button = tk.Button(
-            root, text="Restart Game", command=self.restart_game
+            root, text="Restart Game", command=self.restart_game,
+            bg=BLACK, fg=WHITE, activebackground=LAVANDA, borderwidth=0
         )
         self.restart_button.pack()
 
