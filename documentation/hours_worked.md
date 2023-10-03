@@ -49,3 +49,11 @@ Fixing the heuristics and normalizing | 1h | 27/09/2023
 Creating tests | 1h | 27/09/2023
 Writing the week 4 report | 0.25h | 27/09/2023
 **Total** | **11.25h** | **24/09/2023 - 27/09/2023**
+
+## Week 5
+
+objective | time | date
+--- | --- | ---
+Implementing different weights for the heuristics depending on the stage of the game | 1.5h | 03/10/2023
+Instead of game copies using a stack | 1h | 03/10/2023
+
