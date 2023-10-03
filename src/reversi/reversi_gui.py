@@ -137,6 +137,8 @@ class ReversiGUI:
             "Are you sure you want to restart the game?"
         )
         if user_response == "yes":
+            if self.color_frame is not None:
+                self.color_frame.destroy()
             # remove binds so player cant still play
             self.canvas.unbind("<Button-1>")
             self.choose_color_menu()
