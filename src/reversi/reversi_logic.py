@@ -4,6 +4,7 @@ File containing the logic implementation of the game
 
 
 import copy
+from random import randint
 
 
 class ReversiGame:
@@ -641,6 +642,17 @@ class ReversiGame:
                 print(row)
             print(state[1])
             print("-"*10) """
+
+    def first_ai_move(self):
+        """Make a random move for the first move"""
+        valid_moves = self.get_valid_moves()
+        # select a random move
+        n_moves = len(valid_moves)
+        random = randint(0, n_moves - 1)
+        move = valid_moves[random]
+
+        row, col = move
+        self.make_move(row, col)
 
     def ai_move(self):
         """Makes a move using the minimax algorithm"""

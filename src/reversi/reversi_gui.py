@@ -69,9 +69,12 @@ class ReversiGUI:
         self.game = ReversiGame()
         self.draw_board()
         self.canvas.bind("<Button-1>", self.handle_click)
+        # Update label
+        self.current_player_label.config(text="Current Player: White")
         # If the computer is playing first, make a move
         if self.iacolor == "W":
-            self.handle_ai_move()
+            # self.handle_ai_move()
+            self.handle_first_ai_move()
 
     def custom_message_box(self, title, message):
         # Create a new top-level window
@@ -138,9 +141,6 @@ class ReversiGUI:
             # remove binds so player cant still play
             self.canvas.unbind("<Button-1>")
             self.choose_color_menu()
-            # self.game = ReversiGame()
-            # self.draw_board()
-            # self.current_player_label.config(text="Current Player: White")
 
     def confirm_quit(self):
         """Display a confirmation dialog when leaving the game"""
@@ -197,6 +197,14 @@ class ReversiGUI:
         self.root.update_idletasks()
         # time.sleep(0.5)
         self.game.ai_move()
+        self.move_made()
+
+    def handle_first_ai_move(self):
+        """Make a random move because if not it always does the same"""
+
+        # Force Tkinter to update the screen
+        self.root.update_idletasks()
+        self.game.first_ai_move()
         self.move_made()
 
     def move_made(self):
