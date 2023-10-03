@@ -60,9 +60,9 @@ class ReversiGUI:
             custom_box.destroy()
 
         yes_button = tk.Button(custom_box, text="Yes",
-                            bg="black", fg="white", command=yes_action)
+                               bg=BLACK, fg=WHITE, command=yes_action)
         no_button = tk.Button(custom_box, text="No",
-                            bg="black", fg="white", command=no_action)
+                              bg=BLACK, fg=WHITE, command=no_action)
 
         # Pack the buttons
         yes_button.pack(side=tk.LEFT, padx=10)
@@ -77,10 +77,9 @@ class ReversiGUI:
         parent_width = self.root.winfo_width()
         parent_height = self.root.winfo_height()
 
-        # Calculate the position of the new window
-        custom_box_x = parent_x + parent_width // 2
-        custom_box_y = parent_y + parent_height // 2
-
+        # make it centered
+        custom_box_y = parent_y + parent_height // 4
+        custom_box_x = parent_x + parent_width // 8
         # Set the new window's geometry
         custom_box.geometry(f"+{custom_box_x}+{custom_box_y}")
 
@@ -89,8 +88,6 @@ class ReversiGUI:
 
         # Return the user's response
         return custom_box.user_response
-
-
 
     def restart_game(self):
         """Reset the game state and redraw the board"""
