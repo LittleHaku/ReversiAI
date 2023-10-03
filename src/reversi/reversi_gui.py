@@ -36,10 +36,14 @@ class ReversiGUI:
         self.root.protocol("WM_DELETE_WINDOW", self.confirm_quit)
 
     def restart_game(self):
-        """Reset the game state and redraw the board"""
-        self.game = ReversiGame()
-        self.draw_board()
-        self.current_player_label.config(text="Current Player: White")
+        """new game, thanks Tatu for the feedback"""
+        user_response = messagebox.askyesno(
+            "Restart Confirmation", "Are you sure you want to restart the game?"
+        )
+        if user_response:
+            self.game = ReversiGame()
+            self.draw_board()
+            self.current_player_label.config(text="Current Player: White")
 
     def confirm_quit(self):
         """Display a confirmation dialog when leaving the game"""
