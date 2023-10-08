@@ -5,6 +5,7 @@ File containing the logic implementation of the game
 
 import copy
 from random import randint
+import time
 
 
 class ReversiGame:
@@ -18,6 +19,8 @@ class ReversiGame:
             [" " for _ in range(self.board_size)]
             for _ in range(self.board_size)
         ]
+
+        self.ai_move_times = []
 
         # Initial pieces
         if board is None:
@@ -682,11 +685,16 @@ class ReversiGame:
         """ game_copy = ReversiGame([row[:]
                                 for row in self.board], self.current_player,
                                 self.move_stack) """
+        start_time = time.time()
+
         depth = 5
         alpha = float("-inf")
         beta = float("inf")
         _, move = self.alphabeta_minimax(
             depth, True, alpha, beta)
+        end_time = time.time()
+        move_time = end_time - start_time
+        self.ai_move_times.append(move_time)
         print("AI Move: ", move)
         print("-"*10)
         row, col = move
