@@ -205,6 +205,19 @@ class ReversiGame:
         else:
             return "Tie"
 
+    def eval_mobility_for_move(self, move):
+        """Returns the mobility for the given move, used to sort the moves"""
+
+        row, col = move
+        # Make the move
+        self.make_move(row, col)
+        # Get the mobility
+        mobility = self.eval_mobility()
+        # Undo the move
+        self.undo_move()
+
+        return mobility
+
     def alphabeta_minimax(self, depth, maximizing_player, alpha, beta):
         """ Minimax that will create a new game based on the current game and
         simulate the outcomes of the move there, then return the evaluation
@@ -217,6 +230,13 @@ class ReversiGame:
             return evaluation, None
 
         valid_moves = self.get_valid_moves()
+
+        print("Valid Moves: ", valid_moves)
+
+        # Sort by mobility
+        valid_moves.sort(key=lambda move: self.eval_mobility_for_move(move), reverse=False)
+
+        print("Valid Moves after sort: ", valid_moves)
 
         # If the player is maximizing then it will return the maximum value
         if maximizing_player:
@@ -662,7 +682,7 @@ class ReversiGame:
         """ game_copy = ReversiGame([row[:]
                                 for row in self.board], self.current_player,
                                 self.move_stack) """
-        depth = 3
+        depth = 5
         alpha = float("-inf")
         beta = float("inf")
         _, move = self.alphabeta_minimax(
