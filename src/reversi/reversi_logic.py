@@ -684,7 +684,7 @@ class ReversiGame:
                 else:
                     _, move = self.alphabeta_minimax(
                         depth, True, alpha, beta, start_time)
-                    
+
                 if move is not None:
                     best_move = move
             except TimeoutError:

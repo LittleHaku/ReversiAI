@@ -223,9 +223,13 @@ class ReversiGUI:
         winner = self.game.get_winner()
         # Print average time for each move
         if len(self.game.ai_move_times) > 0:
-            print(f"Average time for each move: {sum(self.game.ai_move_times) / len(self.game.ai_move_times)}"
-                    f" seconds")
-        else:
+            print(
+                "Average time for each move: ",
+                str(sum(self.game.ai_move_times) /
+                    len(self.game.ai_move_times)),
+                " seconds"
+            )
+
             print("Average time for each move: 0 seconds")
 
         # Count the number of black and white pieces
