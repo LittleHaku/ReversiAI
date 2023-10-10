@@ -24,7 +24,7 @@ class ReversiGame:
         self.ai_move_times = []
 
         # The AI wont exceed this time for one move
-        self.max_time = 0.5
+        self.max_time = 1
 
         # Initial pieces
         if board is None:
@@ -684,8 +684,12 @@ class ReversiGame:
                 else:
                     _, move = self.alphabeta_minimax(
                         depth, True, alpha, beta, start_time)
-                best_move = move
+                    
+                if move is not None:
+                    best_move = move
             except TimeoutError:
+                # Decrease one because it wasnt trully evaluated
+                depth -= 1
                 break
 
         self.ai_move_times.append(time.time() - start_time)
