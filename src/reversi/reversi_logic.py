@@ -20,7 +20,11 @@ class ReversiGame:
             for _ in range(self.board_size)
         ]
 
+        # To compute the average time of the AI
         self.ai_move_times = []
+
+        # The AI wont exceed this time for one move
+        self.max_time = 0.5
 
         # Initial pieces
         if board is None:
@@ -221,96 +225,69 @@ class ReversiGame:
 
         return mobility
 
-    def alphabeta_minimax(self, depth, maximizing_player, alpha, beta):
+    def alphabeta_minimax(self, depth, maximizing_player, alpha, beta,
+                          start_time):
         """ Minimax that will create a new game based on the current game and
         simulate the outcomes of the move there, then return the evaluation
         of the move and a tuple with the move, now with alpha-beta pruning!"""
 
+        # Check time
+        if time.time() - start_time > self.max_time:
+            raise TimeoutError
+
         # If the game is over or the depth is 0 then return the evaluation
         if self.is_game_over() or depth == 0:
             evaluation = self.evaluate_board()
-            # print(f"Evaluated Board at depth {depth}: {evaluation}")
             return evaluation, None
 
         valid_moves = self.get_valid_moves()
 
-        # print("Valid Moves: ", valid_moves)
-
-        # Sort by mobility
-        """ valid_moves.sort(
-            key=lambda move: self.eval_mobility_for_move(move),
-            reverse=False) """
-
-        # print("Valid Moves after sort: ", valid_moves)
-
-        # If the player is maximizing then it will return the maximum value
         if maximizing_player:
             max_eval = float("-inf")
             best_move = None
 
             for move in valid_moves:
                 row, col = move
-                # Make the move
                 self.make_move(row, col)
-                # print(f"Maximizing Player: Trying move {move}")
-                # Print the board after making the move
-                """ for row in self.board:
-                    print(row) """
-                # Recursively call minimax for the next level
-                evaluation, _ = self.alphabeta_minimax(
-                    depth - 1, False, alpha, beta)
-                """ print(
-                    f"Maximizing Player: IEvaluated move
-                    {move} to {evaluation}") """
-                # Undo the move
+                try:
+                    evaluation, _ = self.alphabeta_minimax(
+                        depth - 1, False, alpha, beta, start_time)
+                except TimeoutError:
+                    self.undo_move()
+                    break
                 self.undo_move()
 
                 if evaluation > max_eval:
                     max_eval = evaluation
                     best_move = move
 
-                # Take the better between current eval and current alpha
                 alpha = max(alpha, evaluation)
-                # print(f"Maximizing Player: Alpha = {alpha}, Beta = {beta}")
-
-                # If beta is less than or equal to alpha then prune
                 if beta <= alpha:
-                    # print("Maximizing Player: Pruned")
                     break
 
             return max_eval, best_move
 
-        # If the player is minimizing then it will return the minimum value
         else:
             min_eval = float('inf')
             best_move = None
 
             for move in valid_moves:
                 row, col = move
-                # Make the move
                 self.make_move(row, col)
-                # print(f"Minimizing Player: Trying move {move}")
-                # Recursively call minimax for the next level
-                evaluation, _ = self.alphabeta_minimax(
-                    depth - 1, True, alpha, beta)
-
-                """ print(
-                    f"Minimizing Player: Evaluated move
-                    {move} to {evaluation}") """
-                # Undo the move
+                try:
+                    evaluation, _ = self.alphabeta_minimax(
+                        depth - 1, True, alpha, beta, start_time)
+                except TimeoutError:
+                    self.undo_move()
+                    break
                 self.undo_move()
 
                 if evaluation < min_eval:
                     min_eval = evaluation
                     best_move = move
 
-                # Take the better between current eval and current beta
                 beta = min(beta, evaluation)
-                # print(f"Minimizing Player: Alpha = {alpha}, Beta = {beta}")
-
-                # If beta is less than or equal to alpha then prune
                 if beta <= alpha:
-                    # print("Minimizing Player: Pruned")
                     break
 
             return min_eval, best_move
@@ -687,31 +664,35 @@ class ReversiGame:
         """ game_copy = ReversiGame([row[:]
                                 for row in self.board], self.current_player,
                                 self.move_stack) """
-        start_time = time.time()
 
+        start_time = time.time()
         max_depth = 10
         alpha = float("-inf")
         beta = float("inf")
         best_move = None
+        stating_depth = 2
 
-        for depth in range(3, max_depth + 1):
-            if depth % 2 == 0:
-                _, move = self.alphabeta_minimax(depth, False, alpha, beta)
-            else:
-                _, move = self.alphabeta_minimax(depth, True, alpha, beta)
-            best_move = move
-
-            end_time = time.time()
-            move_time = end_time - start_time
-            if move_time >= 1:
+        for depth in range(stating_depth, max_depth + 1):
+            # Check if 1 second has passed
+            if time.time() - start_time >= self.max_time:
                 break
 
-        self.ai_move_times.append(move_time)
+            try:
+                if depth % 2 == 0:
+                    _, move = self.alphabeta_minimax(
+                        depth, False, alpha, beta, start_time)
+                else:
+                    _, move = self.alphabeta_minimax(
+                        depth, True, alpha, beta, start_time)
+                best_move = move
+            except TimeoutError:
+                break
+
+        self.ai_move_times.append(time.time() - start_time)
         print("AI Move: ", best_move)
         print("-"*10)
-        print("Move Time: ", move_time)
+        print("Move Time: ", time.time() - start_time)
         print("Depth: ", depth)
         row, col = move
-        # print("AI Move: ", row, col)
 
         self.make_move(row, col)
