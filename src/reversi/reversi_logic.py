@@ -659,12 +659,6 @@ class ReversiGame:
     def ai_move(self):
         """Makes a move using the minimax algorithm"""
 
-        # Make a copy of the state of the game
-        # Make a copy of the board because if not it places two pieces
-        """ game_copy = ReversiGame([row[:]
-                                for row in self.board], self.current_player,
-                                self.move_stack) """
-
         start_time = time.time()
         max_depth = 10
         alpha = float("-inf")
@@ -673,7 +667,7 @@ class ReversiGame:
         stating_depth = 2
 
         for depth in range(stating_depth, max_depth + 1):
-            # Check if 1 second has passed
+            # Check if the max time has passed
             if time.time() - start_time >= self.max_time:
                 break
 
