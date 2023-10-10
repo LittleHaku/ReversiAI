@@ -226,7 +226,7 @@ class ReversiGame:
         return mobility
 
     def alphabeta_minimax(self, depth, maximizing_player, alpha, beta,
-                          start_time):
+                          start_time=time.time()):
         """ Minimax that will create a new game based on the current game and
         simulate the outcomes of the move there, then return the evaluation
         of the move and a tuple with the move, now with alpha-beta pruning!"""
