@@ -234,12 +234,14 @@ class ReversiGame:
 
         valid_moves = self.get_valid_moves()
 
-        print("Valid Moves: ", valid_moves)
+        # print("Valid Moves: ", valid_moves)
 
         # Sort by mobility
-        valid_moves.sort(key=lambda move: self.eval_mobility_for_move(move), reverse=False)
+        """ valid_moves.sort(
+            key=lambda move: self.eval_mobility_for_move(move),
+            reverse=False) """
 
-        print("Valid Moves after sort: ", valid_moves)
+        # print("Valid Moves after sort: ", valid_moves)
 
         # If the player is maximizing then it will return the maximum value
         if maximizing_player:
@@ -687,16 +689,28 @@ class ReversiGame:
                                 self.move_stack) """
         start_time = time.time()
 
-        depth = 5
+        max_depth = 10
         alpha = float("-inf")
         beta = float("inf")
-        _, move = self.alphabeta_minimax(
-            depth, True, alpha, beta)
-        end_time = time.time()
-        move_time = end_time - start_time
+        best_move = None
+
+        for depth in range(3, max_depth + 1):
+            if depth % 2 == 0:
+                _, move = self.alphabeta_minimax(depth, False, alpha, beta)
+            else:
+                _, move = self.alphabeta_minimax(depth, True, alpha, beta)
+            best_move = move
+
+            end_time = time.time()
+            move_time = end_time - start_time
+            if move_time >= 1:
+                break
+
         self.ai_move_times.append(move_time)
-        print("AI Move: ", move)
+        print("AI Move: ", best_move)
         print("-"*10)
+        print("Move Time: ", move_time)
+        print("Depth: ", depth)
         row, col = move
         # print("AI Move: ", row, col)
 
