@@ -4,6 +4,12 @@
 
 - Enter the directory `cd ReversiAI`
 - Run the game with `make play`
+- In the menu below select if you want to play with blacks or whites
+- If you want to restart the game you can always do so with the button below and selecting the pieces you want to play with again
+  
+## Modifying Playing Time of the AI
+
+If you want to make the AI take longer or shorter, this can be done in the file [reversi_logic.py](/src/reversi/reversi_logic.py) and modify `self.max_time` to be equal to the number of seconds you want to take. Higher times will have a deeper minimax and thus the AI will be better, I recommend setting it to 1.
 
 ## Reversi Rules
 
