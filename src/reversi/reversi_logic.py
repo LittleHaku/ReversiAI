@@ -684,7 +684,6 @@ class ReversiGame:
             if time.time() - start_time >= self.max_time:
                 break
 
-            print("Depth: ", depth)
             move = None
 
             try:
@@ -698,14 +697,9 @@ class ReversiGame:
                 if move is not None:
                     best_move = move
             except TimeoutError:
-                print("Timeout")
                 # Decrease one because it wasnt trully evaluated
                 depth -= 1
                 break
-
-        """ depth = 6
-        _, move = self.alphabeta_minimax(
-            depth, False, alpha, beta, start_time, valid_moves) """
 
         self.ai_move_times.append(time.time() - start_time)
         self.ai_depths.append(depth)

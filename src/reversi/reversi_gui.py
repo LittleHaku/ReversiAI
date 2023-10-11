@@ -230,8 +230,6 @@ class ReversiGUI:
                 " seconds"
             )
 
-            print("Average time for each move: 0 seconds")
-
         # Print average depth reached
         if len(self.game.ai_depths) > 0:
             print(
