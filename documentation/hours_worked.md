@@ -66,3 +66,4 @@ objective | time | date
 --- | --- | ---
 Call with Hannu | 1h | 08/10/2023
 Trying to sort the moves | 1h | 08/10/2023
+Iterative deepening | 4h | 10/10/2023-11/10/2023
