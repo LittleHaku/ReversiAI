@@ -23,6 +23,9 @@ class ReversiGame:
         # To compute the average time of the AI
         self.ai_move_times = []
 
+        # To compute the average depth reached
+        self.ai_depths = []
+
         # The AI wont exceed this time for one move
         self.max_time = 1
 
@@ -695,6 +698,7 @@ class ReversiGame:
                 break
 
         self.ai_move_times.append(time.time() - start_time)
+        self.ai_depths.append(depth)
         print("AI Move: ", best_move)
         print("-"*10)
         print("Move Time: ", time.time() - start_time)

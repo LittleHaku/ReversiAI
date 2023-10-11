@@ -232,6 +232,12 @@ class ReversiGUI:
 
             print("Average time for each move: 0 seconds")
 
+        # Print average depth reached
+        if len(self.game.ai_depths) > 0:
+            print(
+                "Average depth reached: ",
+                str(sum(self.game.ai_depths) / len(self.game.ai_depths))
+            )
         # Count the number of black and white pieces
         black_count = 0
         white_count = 0
