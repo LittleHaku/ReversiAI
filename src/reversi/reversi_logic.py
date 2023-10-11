@@ -226,7 +226,7 @@ class ReversiGame:
         return mobility
 
     def alphabeta_minimax(self, depth, maximizing_player, alpha, beta,
-                          start_time=time.time()):
+                          start_time=time.time(), valid_moves=None):
         """ Minimax that will create a new game based on the current game and
         simulate the outcomes of the move there, then return the evaluation
         of the move and a tuple with the move, now with alpha-beta pruning!"""
@@ -240,7 +240,13 @@ class ReversiGame:
             evaluation = self.evaluate_board()
             return evaluation, None
 
-        valid_moves = self.get_valid_moves()
+        """The first time we call it we will give the valid moves sorted by
+        mobility but we cant pass this to the next minimax because since
+        there has been another piece placed, the set of valid moves will
+        be different"""
+
+        if valid_moves is None:
+            valid_moves = self.get_valid_moves()
 
         if maximizing_player:
             max_eval = float("-inf")
@@ -666,6 +672,8 @@ class ReversiGame:
         best_move = None
         stating_depth = 2
 
+        valid_moves = self.get_valid_moves()
+
         for depth in range(stating_depth, max_depth + 1):
             # Check if the max time has passed
             if time.time() - start_time >= self.max_time:
@@ -674,10 +682,10 @@ class ReversiGame:
             try:
                 if depth % 2 == 0:
                     _, move = self.alphabeta_minimax(
-                        depth, False, alpha, beta, start_time)
+                        depth, False, alpha, beta, start_time, valid_moves)
                 else:
                     _, move = self.alphabeta_minimax(
-                        depth, True, alpha, beta, start_time)
+                        depth, True, alpha, beta, start_time, valid_moves)
 
                 if move is not None:
                     best_move = move
