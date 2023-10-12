@@ -67,3 +67,6 @@ objective | time | date
 Call with Hannu | 1h | 08/10/2023
 Trying to sort the moves | 1h | 08/10/2023
 Iterative deepening | 4h | 10/10/2023-11/10/2023
+Implenting the cache | 5h | 11/10/2023-12/10/2023
+Writing the week 6 report | 0.25h | 12/10/2023
+**Total** | **11.25h** | **08/10/2023 - 12/10/2023**

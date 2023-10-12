@@ -28,3 +28,4 @@ Made for the course TKT20010 at the University of Helsinki.
 - [Week 3](documentation/weekly_reports/week3.md)
 - [Week 4](documentation/weekly_reports/week4.md)
 - [Week 5](documentation/weekly_reports/week5.md)
+- [Week 6](documentation/weekly_reports/week6.md)
