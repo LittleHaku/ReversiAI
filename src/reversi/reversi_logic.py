@@ -20,6 +20,9 @@ class ReversiGame:
             for _ in range(self.board_size)
         ]
 
+        # Memoization
+        self.memoization = {}
+
         # To compute the average time of the AI
         self.ai_move_times = []
 
@@ -251,6 +254,14 @@ class ReversiGame:
         if valid_moves is None:
             valid_moves = self.get_valid_moves()
 
+        # Trying different ways for the memoization
+        key = (tuple(tuple(row)
+               for row in self.board), self.current_player, depth)
+
+        if key in self.memoization:
+            # print("Memoization", self.current_player, depth)
+            return self.memoization[key]
+
         if maximizing_player:
             max_eval = float("-inf")
             best_move = None
@@ -275,6 +286,7 @@ class ReversiGame:
                 if beta <= alpha:
                     break
 
+            self.memoization[key] = (max_eval, best_move)
             return max_eval, best_move
 
         else:
@@ -301,6 +313,7 @@ class ReversiGame:
                 if beta <= alpha:
                     break
 
+            self.memoization[key] = (min_eval, best_move)
             return min_eval, best_move
 
     def evaluate_board(self):
