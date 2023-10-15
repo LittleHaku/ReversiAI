@@ -260,7 +260,14 @@ class ReversiGame:
 
         if key in self.memoization:
             # print("Memoization", self.current_player, depth)
-            return self.memoization[key]
+            # return self.memoization[key]
+            # Set it as the first in valid moves
+            move = self.memoization[key][1]
+            # Print before
+            # print("Before: ", valid_moves)
+            valid_moves.remove(move)
+            valid_moves.insert(0, move)
+            # print("After: ", valid_moves)
 
         if maximizing_player:
             max_eval = float("-inf")
