@@ -6,6 +6,8 @@ BLACK = "#131221"
 LAVANDA = "#8b87e0"
 WHITE = "#edfff5"
 
+CELL_SIZE = 50
+
 
 class ReversiGUI:
     def __init__(self, root):
@@ -154,8 +156,8 @@ class ReversiGUI:
     def draw_board(self):
         for row in range(self.game.board_size):
             for col in range(self.game.board_size):
-                x1, y1 = col * 50, row * 50
-                x2, y2 = x1 + 50, y1 + 50
+                x1, y1 = col * CELL_SIZE, row * CELL_SIZE
+                x2, y2 = x1 + CELL_SIZE, y1 + CELL_SIZE
                 self.canvas.create_rectangle(
                     x1, y1, x2, y2, fill=LAVANDA, outline=WHITE
                 )
@@ -179,8 +181,8 @@ class ReversiGUI:
                     )
 
     def handle_click(self, event):
-        col = event.x // 50
-        row = event.y // 50
+        col = event.x // CELL_SIZE
+        row = event.y // CELL_SIZE
         if (row, col) in self.game.get_valid_moves():
             self.handle_move(col, row)
 

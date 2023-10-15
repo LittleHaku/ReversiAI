@@ -38,17 +38,6 @@ class ReversiGame:
             self.board[3][4] = "B"
             self.board[4][3] = "B"
             self.board[4][4] = "W"
-            # Board to test if AI tries to win
-            """ self.board = [
-                ['B', 'W', 'B', 'B', 'B', 'B', ' ', ' '],
-                ['B', 'B', 'B', 'B', 'B', 'B', 'B', 'B'],
-                ['B', 'B', 'B', 'B', 'B', 'B', 'B', 'B'],
-                ['B', 'B', 'B', 'B', 'B', 'B', 'B', 'B'],
-                ['B', 'B', 'B', 'B', 'B', 'B', 'B', 'B'],
-                ['B', 'B', 'B', 'B', 'B', 'B', 'B', 'B'],
-                ['B', 'B', 'B', 'B', 'W', 'B', 'B', 'B'],
-                ['B', 'B', 'B', 'B', ' ', 'B', 'B', 'B']
-            ] """
         else:
             self.board = board
 
@@ -217,19 +206,6 @@ class ReversiGame:
             return "W"
         else:
             return "Tie"
-
-    def eval_mobility_for_move(self, move):
-        """Returns the mobility for the given move, used to sort the moves"""
-
-        row, col = move
-        # Make the move
-        self.make_move(row, col)
-        # Get the mobility
-        mobility = self.eval_mobility()
-        # Undo the move
-        self.undo_move()
-
-        return mobility
 
     def alphabeta_minimax(self, depth, maximizing_player, alpha, beta,
                           start_time=time.time(), valid_moves=None):
