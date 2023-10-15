@@ -677,8 +677,6 @@ class ReversiGame:
 
         for depth in range(stating_depth, max_depth + 1):
             # Check if the max time has passed
-            if time.time() - start_time >= self.max_time:
-                break
 
             move = None
 
