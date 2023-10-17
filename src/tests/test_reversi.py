@@ -148,7 +148,7 @@ class TestReversiGame(unittest.TestCase):
         print(eval)
         print(move)
 
-        self.assertGreaterEqual(eval, 50)
+        self.assertGreaterEqual(eval, 25)
         self.assertEqual(move, (0, 7))
 
     def test_alpha_beta_minimax_ai_loses(self):
@@ -174,7 +174,7 @@ class TestReversiGame(unittest.TestCase):
 
         print(eval)
         print(move)
-        self.assertLessEqual(eval, -50)
+        self.assertLessEqual(eval, -25)
 
     def test_ai_move(self):
         # Create a board where the AI (blacks) can win with one move

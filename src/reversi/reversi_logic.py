@@ -7,6 +7,10 @@ import copy
 from random import randint
 import time
 
+EARLY_WEIGHTS = 0
+MID_WEIGHTS = 1
+LATE_WEIGHTS = 2
+
 
 class ReversiGame:
     """Reversi Game Class"""
@@ -28,6 +32,8 @@ class ReversiGame:
 
         # To compute the average depth reached
         self.ai_depths = []
+
+        self.weights = EARLY_WEIGHTS
 
         # The AI wont exceed this time for one move
         self.max_time = 1
@@ -302,12 +308,7 @@ class ReversiGame:
     def evaluate_board(self):
         """Simple evaluation function: difference in piece count"""
 
-        # Weights for the evaluation function
-        # The weights will be divided into early, mid and late game
-        n_pieces = sum(row.count("B") for row in self.board) + \
-            sum(row.count("W") for row in self.board)
-
-        if n_pieces < 20:
+        if self.weights == EARLY_WEIGHTS:
             # Early game, we dont need to maximize the pieces but the strategy
             # getting a lot of mobility to be able to make better moves
             coin_diff = 10
@@ -316,7 +317,7 @@ class ReversiGame:
             frontier = 40
             stability = 10
             corners = 50
-        elif n_pieces < 40:
+        elif self.weights == MID_WEIGHTS:
             # Mid game, we need to get the corners and the best spots
             coin_diff = 20
             coin_placement = 70
@@ -324,7 +325,7 @@ class ReversiGame:
             frontier = 20
             stability = 40
             corners = 70
-        else:
+        elif self.weights == LATE_WEIGHTS:
             # At this point the game is almost over, we need a lot of pieces
             # and not to get flipped
             coin_diff = 100
@@ -334,27 +335,12 @@ class ReversiGame:
             stability = 100
             corners = 50
 
-        """ coin_diff = 1
-        coin_placement = 50
-        mobility = 1
-        frontier = 10
-        stability = 25
-        corners = 50 """
-
         coin_diff *= self.eval_coin_diff()
         coin_placement *= self.eval_coin_placement()
         mobility *= self.eval_mobility()
         frontier *= self.eval_frontier()
         stability *= self.eval_stability()
         corners *= self.eval_corner()
-        """ print("-"*10)
-
-        print("Coin Diff: ", coin_diff)
-        print("Coin Placement: ", coin_placement)
-        print("Mobility: ", mobility)
-        print("Frontier: ", frontier)
-        print("Stability: ", stability)
-        print("Corners: ", corners) """
 
         heuristic = coin_diff + coin_placement + mobility + frontier + \
             stability + corners
@@ -671,7 +657,20 @@ class ReversiGame:
         alpha = float("-inf")
         beta = float("inf")
         best_move = None
-        stating_depth = 2
+        stating_depth = 3
+
+        # Count the number of pieces
+        n_pieces = sum(row.count("B") for row in self.board) + \
+            sum(row.count("W") for row in self.board)
+
+        # Stablishing this now helps us prevent the iterative deepening from
+        # changing the weights
+        if n_pieces < 20:
+            self.weights = EARLY_WEIGHTS
+        elif n_pieces < 40:
+            self.weights = MID_WEIGHTS
+        else:
+            self.weights = LATE_WEIGHTS
 
         valid_moves = self.get_valid_moves()
 
