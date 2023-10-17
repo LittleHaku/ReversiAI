@@ -238,7 +238,7 @@ class ReversiGame:
 
         # Trying different ways for the memoization
         key = (tuple(tuple(row)
-               for row in self.board), self.current_player, depth)
+               for row in self.board))
 
         if key in self.memoization:
             # print("Memoization", self.current_player, depth)
