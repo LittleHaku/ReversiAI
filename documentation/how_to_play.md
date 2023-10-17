@@ -1,5 +1,10 @@
 # How to play
 
+## Installation
+
+- Clone the repository
+- Install poetry with `curl -sSL https://install.python-poetry.org | python3 -` or `make install_poetry`
+
 ## How to run the game
 
 - Enter the directory `cd ReversiAI`
