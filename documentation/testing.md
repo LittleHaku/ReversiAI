@@ -1,19 +1,49 @@
 # Testing
 
+## What is being tested
+
+The tests for this project are in the `test_reversi.py` file. The tests are divided into two classes.
+
+- **TestReversiGame**: Tests the game logic, the board and the pieces.
+- **TestReversiGameAI**: Tests the AI, the heuristics and the minimax with alphabeta pruning.
+- The GUI has been manually tested.
+
 ## Installation
 
-- Clone the repository
-- Install poetry with `curl -sSL https://install.python-poetry.org | python3 -` or `make install_poetry`
+- Clone the repositoryTestReversiGameAI
+- Install poetry with
+
+    ```bash
+    make install_poetry
+    ```
+
+    or
+
+    ```bash
+    curl -sSL https://install.python-poetry.org | python3 -
+    ```
 
 ## Unit tests
 
-To execute the unit testings: `make test`
+To execute the unit testings:
+
+```bash
+make test
+```
 
 ## See coverage
 
-To see the coverage: `make coverage`
+To see the coverage:
+
+```bash
+make coverage
+```
 
 ## Checkstyle
 
 - Being at the root of the project
-- Run `make flake8`
+- Run
+
+    ```bash
+    make lint
+    ```
