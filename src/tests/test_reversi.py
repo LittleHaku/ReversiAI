@@ -123,6 +123,9 @@ class TestReversiGame(unittest.TestCase):
         # Check the stack is the same
         self.assertEqual(new_game.move_stack, stack)
 
+
+class TestReversiGameAI(unittest.TestCase):
+
     def test_alpha_beta_minimax_ai_win(self):
         # Create a board where the AI (blacks) can win with one move
         board = [
@@ -207,6 +210,7 @@ class TestReversiGame(unittest.TestCase):
 
     def test_pruning(self):
         # Create a normal game, make a move and let them play
+        # Pruning should be used, if it is not used we will see
         game = ReversiGame()
         # Make a move at (5, 2)
         game.make_move(5, 2)
