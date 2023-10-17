@@ -2,7 +2,7 @@
 
 ## What is being tested
 
-The tests for this project are in the `test_reversi.py` file. The tests are divided into two classes.
+The tests for this project are in the `test_reversi.py` file. These tests have been made using the `unittest` library. The tests are divided into two classes:
 
 - **TestReversiGame**: Tests the game logic, the board and the pieces.
 - **TestReversiGameAI**: Tests the AI, the heuristics and the minimax with alphabeta pruning.
