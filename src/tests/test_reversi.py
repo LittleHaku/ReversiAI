@@ -393,6 +393,8 @@ class TestReversiGameAI(unittest.TestCase):
         game.ai_move()
         self.assertEqual(game.board, expected_board)
 
+        game.ai_move()
+
     def test_first_random_ai_move(self):
         game = ReversiGame()
         game.first_ai_move()

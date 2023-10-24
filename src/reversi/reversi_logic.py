@@ -247,8 +247,9 @@ class ReversiGame:
             move = self.memoization[key][1]
             # Print before
             # print("Before: ", valid_moves)
-            valid_moves.remove(move)
-            valid_moves.insert(0, move)
+            if move in valid_moves:
+                valid_moves.remove(move)
+                valid_moves.insert(0, move)
             # print("After: ", valid_moves)
 
         if maximizing_player:
