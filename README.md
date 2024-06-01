@@ -11,14 +11,22 @@ Made for the course TKT20010 at the University of Helsinki.
 
 The project test coverage can be checked at the top of the readme where it says `codecov`
 
+### Key Features
+
+- **AI Opponent:** Face off against an AI adversary with advanced decision-making capabilities.
+- **Comprehensive Testing:** Thorough test coverage ensures robustness and reliability.
+- **Extensive Documentation:** Detailed documentation provides insights into project specifications, implementation details, and gameplay instructions.
+
 ## Documentation
 
-- [Project Specification](documentation/project_specification.md)
-- [Manual](documentation/how_to_play.md)
-- [Testing](documentation/testing.md)
-- [Implementation](documentation/implementation.md)
+- [Project Specification](documentation/project_specification.md): Details regarding project description, data sctructures, etc.
+- [Manual/Instructions](documentation/how_to_play.md): How to install and run the game, how to play Reversi/Othello and modify the difficulty.
+- [Testing](documentation/testing.md): What is being tested, and how to replicate the tests.
+- [Implementation](documentation/implementation.md): How the project was implemented and other details.
 
 ## Weekly Reports
+
+Track the progress and development of the project through weekly reports:
 
 - [Hours Worked](documentation/hours_worked.md)
 - [Week 1](documentation/weekly_reports/week1.md)
@@ -29,6 +37,8 @@ The project test coverage can be checked at the top of the readme where it says 
 - [Week 6](documentation/weekly_reports/week6.md)
 
 ## Instructions
+
+You can check a more detailed version in the [Manual/Instructions](documentation/how_to_play.md).
 
 1. Clone the repo and then access the directory
 ```bash
